@@ -69,8 +69,8 @@ int ordem_grafo(GRAFO *grafo){
 }
 
 int tamanho_grafo(GRAFO *grafo){
-	printf("\nTamanho do grafo: %d\n",grafo->vertices + grafo->arestas);
-	return grafo->vertices + grafo->arestas;
+	printf("\nTamanho do grafo: %d\n", grafo->arestas);
+	return grafo->arestas;
 }
 
 void vizinho_vertice(GRAFO *grafo, int num){
