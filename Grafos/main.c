@@ -21,4 +21,7 @@ int main(){
     ordem = ordem_grafo(grafo);
     tamanho = tamanho_grafo(grafo);
     vizinho_vertice(grafo,4);
+    grau_vertice(grafo,4);
+
+    sequencia_graus(grafo);
     }

@@ -52,10 +52,10 @@ void imprime(GRAFO *grafo){
 	printf("Vertices: %d. Arestas: %d. \n",grafo->vertices,grafo->arestas); //imprime numero de vertices e arestas
 	int i;
 	for(i=0; i< grafo->vertices; i++){
-		printf("%d: ",i); //imprimir em qual aresta esta
+		printf("%d: ",i+1); //imprimir em qual aresta esta
 		ADJACENCIA *ad = grafo->adj[i].cabeca; //chamo a cebeça da lista de adjacencia desta aresta
 			while(ad){ //enquanto as adjacencias nao forem nula
-				printf("%d(%.2f) ",ad->vertice,ad->peso); //imprimir a adjacencia e o peso
+				printf("%d(%.2f) ",ad->vertice+1,ad->peso); //imprimir a adjacencia e o peso
 				ad=ad->prox; //vai para a proxima adjacencia
 			}
 			
@@ -78,13 +78,66 @@ void vizinho_vertice(GRAFO *grafo, int num){
 	for(i=0; i< grafo->vertices; i++){
 		if (i == num)
 		{
-			printf("Vizinhos de %d: ",i);
+			printf("Vizinhos de %d: ",i+1);
 			ADJACENCIA *ad = grafo->adj[i].cabeca; //chamo a cebeça da lista de adjacencia desta aresta
 			while(ad){ //enquanto as adjacencias nao forem nula
-				printf("%d ",ad->vertice); //imprimir a adjacencia e o peso
+				printf("%d ",ad->vertice+1); //imprimir a adjacencia e o peso
 				ad=ad->prox; //vai para a proxima adjacencia
 			}
 			printf("\n");
 		}
 	}
+}
+
+void grau_vertice(GRAFO *grafo, int num){
+	int i;
+	int cont=0;
+	for(i=0; i< grafo->vertices; i++){
+		if (i == num)
+		{
+			printf("Grau do vertice %d: ",i+1);
+			ADJACENCIA *ad = grafo->adj[i].cabeca; //chamo a cebeça da lista de adjacencia desta aresta
+			while(ad){ //enquanto as adjacencias nao forem nula
+				cont++;
+				ad=ad->prox; //vai para a proxima adjacencia
+			}
+			printf("%d",cont);
+			printf("\n");
+		}
+	}
+}
+
+void sequencia_graus(GRAFO *grafo){
+	int i;
+	int cont=0;
+	int vet[grafo->vertices];
+
+	for(i=0; i< grafo->vertices; i++){
+			ADJACENCIA *ad = grafo->adj[i].cabeca; //chamo a cebeça da lista de adjacencia desta aresta
+			while(ad){ //enquanto as adjacencias nao forem nula
+				cont++;
+				ad=ad->prox; //vai para a proxima adjacencia
+			}
+			vet[i] = cont;
+			cont=0;
+	}
+	 for (i = 0; i < grafo->vertices - 1; ++i) {
+        for (int j = i + 1; j < grafo->vertices; ++j) {
+            if (vet[i] > vet[j]) {
+                int temp = vet[i];
+                vet[i] = vet[j];
+                vet[j] = temp;
+            }
+        }
+    }
+	printf("Sequencia de Graus:");
+	for (i = 0; i < grafo->vertices; i++)
+	{
+		printf(" %d",vet[i]);
+	}
+	printf("\n");
+}
+
+void exetricidade_do_grafo(GRAFO *grafo, int vet1, int vet2){
+	
 }
