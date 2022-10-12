@@ -25,3 +25,9 @@ ADJACENCIA *criaListaadj(int v, float peso);
 void criaAresta(GRAFO *gr, int vi, int vf, float p);
 
 void imprime(GRAFO *gr);
+
+int ordem_grafo(GRAFO *grafo);
+
+int tamanho_grafo(GRAFO *grafo);
+
+void vizinho_vertice(GRAFO *grafo, int num);

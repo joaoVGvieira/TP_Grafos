@@ -62,3 +62,29 @@ void imprime(GRAFO *grafo){
 		printf("\n");	
 	}
 }
+
+int ordem_grafo(GRAFO *grafo){
+	printf("\nOrdem do grafo: %d",grafo->vertices);
+	return grafo->vertices;
+}
+
+int tamanho_grafo(GRAFO *grafo){
+	printf("\nTamanho do grafo: %d\n",grafo->vertices + grafo->arestas);
+	return grafo->vertices + grafo->arestas;
+}
+
+void vizinho_vertice(GRAFO *grafo, int num){
+	int i;
+	for(i=0; i< grafo->vertices; i++){
+		if (i == num)
+		{
+			printf("Vizinhos de %d: ",i);
+			ADJACENCIA *ad = grafo->adj[i].cabeca; //chamo a cebeça da lista de adjacencia desta aresta
+			while(ad){ //enquanto as adjacencias nao forem nula
+				printf("%d ",ad->vertice); //imprimir a adjacencia e o peso
+				ad=ad->prox; //vai para a proxima adjacencia
+			}
+			printf("\n");
+		}
+	}
+}

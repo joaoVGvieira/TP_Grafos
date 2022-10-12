@@ -7,13 +7,18 @@ int main(){
     int quant_vertice;
     int a1,a2;
     float peso;
+    int ordem,tamanho;
     fp = fopen("arquivo_teste.txt","r");
     fscanf(fp,"%d\n",&quant_vertice);
-    GRAFO *gr = criaGrafo(quant_vertice);
+    GRAFO *grafo = criaGrafo(quant_vertice);
     while (!feof(fp))
     {
       fscanf (fp,"%d %d %f\n", &a1,&a2,&peso);
-      criaAresta(gr,a1,a2,peso);
+      criaAresta(grafo,a1,a2,peso);
     }   
-    imprime(gr);
+    imprime(grafo);
+
+    ordem = ordem_grafo(grafo);
+    tamanho = tamanho_grafo(grafo);
+    vizinho_vertice(grafo,4);
     }
