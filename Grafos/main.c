@@ -22,6 +22,19 @@ int main(){
     tamanho = tamanho_grafo(grafo);
     vizinho_vertice(grafo,4);
     grau_vertice(grafo,4);
-
     sequencia_graus(grafo);
+    
+    // for(int j = 0; j < grafo->vertices; j++){
+    //   ADJACENCIA* prox = (*grafo).adj[j].cabeca;
+    //   do{
+    //     printf("\n %f", prox->peso);
+    //     prox = prox->prox;
+    //   }while(prox != NULL);
+    // }
+
+
+
+    for(int i = 0; i < ordem; i++){
+      printf("\nExcentricidade do vertice %d = %f", i+1, BellmanFord(grafo, i));
     }
+}

@@ -1,5 +1,7 @@
 
 #include "grafo.h"
+#include <math.h>
+#include <float.h>
 
 //funçao para criar um GRAFO
 GRAFO *criaGrafo (int v) {
@@ -34,8 +36,8 @@ void criaAresta(GRAFO *grafo, int verticeInicial, int verticeFinal, float p) { /
 	
 	ADJACENCIA *novo = criaListaadj(verticeFinal,p); //crio adjacencia com o vertice final e o peso
 	//coloco a adjacencia na lista do vertice inicial
-	novo->prox = grafo->adj[verticeInicial].cabeca; //o campo prox da adjacencia vai receber a cabeça da lista
-	grafo->adj[verticeInicial].cabeca=novo; // e a cabeça da lista passa a ser o novo elemento
+	novo->prox = grafo->adj[verticeInicial].cabeca; //o campo prox da adjacencia vai apontar para quem a cabeça da lista apontava
+	grafo->adj[verticeInicial].cabeca=novo; // e a cabeça da lista passa a apontar para o novo elemento
 
 	novo = criaListaadj(verticeInicial,p); //crio adjacencia com o vertice final e o peso
 	//coloco a adjacencia na lista do vertice inicial
@@ -138,6 +140,60 @@ void sequencia_graus(GRAFO *grafo){
 	printf("\n");
 }
 
-void exetricidade_do_grafo(GRAFO *grafo, int vet1, int vet2){
+void exetricidade_do_grafo(GRAFO *grafo, int vet1){
 	
+}
+
+float BellmanFord(GRAFO *grafo, int vertice){
+
+	float float_max = FLT_MAX;
+
+	int verticesCount = grafo->vertices;
+	int edgesCount = grafo->arestas;
+	float* distance = (float*)malloc(sizeof(float) * verticesCount);
+
+	for (int i = 0; i < verticesCount; i++){
+		distance[i] = float_max;
+	}
+
+	distance[vertice] = 0;
+
+
+	for(int i = 1; i <= verticesCount; i ++){
+		for(int j = 0; j < verticesCount; j++){
+			ADJACENCIA* prox = (*grafo).adj[j].cabeca;
+			while(prox != NULL){
+
+				int u = j;
+				int v = prox->vertice;
+				float weight = prox->peso;
+
+				if (distance[u] != float_max && distance[u] + weight < distance[v])
+					distance[v] = distance[u] + weight;
+
+				
+
+				prox = prox->prox;
+			}
+		}
+	}
+
+	for(int j = 0; j < grafo->vertices; j++){
+		for(ADJACENCIA* prox = (*grafo).adj[j].cabeca; prox != NULL; prox = prox->prox){
+		
+
+		int u = j;
+		int v = prox->vertice;
+		float weight = prox->peso;
+		}
+	}
+	float maior_distancia = distance[0];
+	
+	for (int i = 1; i < grafo->vertices; i++){
+		if(distance[i] > maior_distancia){
+			maior_distancia = distance[i];	
+		}
+	}
+
+	return maior_distancia;
 }
