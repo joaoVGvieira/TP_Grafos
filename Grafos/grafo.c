@@ -197,3 +197,49 @@ float BellmanFord(GRAFO *grafo, int vertice){
 
 	return maior_distancia;
 }
+
+float raio_grafo(GRAFO *grafo){
+	float raio;
+	int vertice;
+
+	for(int i = 0; i < grafo->vertices; i++){
+		if(i == 0){
+			raio = BellmanFord(grafo, i);
+			vertice = 0;
+		}
+		if(BellmanFord(grafo, i) < raio){
+			raio = BellmanFord(grafo, i);
+			vertice = i;
+		}
+	}
+
+	return raio;
+}
+
+float diametro_grafo(GRAFO *grafo){
+	float diametro;
+	int vertice;
+
+	for(int i = 0; i < grafo->vertices; i++){
+		if(i == 0){
+			diametro = BellmanFord(grafo, i);
+			vertice = 0;
+		}
+		if(BellmanFord(grafo, i) > diametro){
+			diametro = BellmanFord(grafo, i);
+			vertice = i;
+		}
+	}
+
+	return diametro;
+}
+
+void centro_grafo(GRAFO *grafo){
+	printf("\nVertices que fazer parte do centro: ");
+    for(int i = 0; i < grafo->vertices; i++){
+      	if(BellmanFord(grafo, i) == raio_grafo(grafo)){
+        	printf("%d ", i+1);
+      	}
+    }
+	return;
+}

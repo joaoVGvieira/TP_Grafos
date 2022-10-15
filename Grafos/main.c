@@ -6,7 +6,7 @@ int main(){
     FILE *fp;
     int quant_vertice;
     int a1,a2;
-    float peso;
+    float peso, menor_excentricidade;
     int ordem,tamanho;
     fp = fopen("arquivo_teste.txt","r");
     fscanf(fp,"%d\n",&quant_vertice);
@@ -23,18 +23,13 @@ int main(){
     vizinho_vertice(grafo,4);
     grau_vertice(grafo,4);
     sequencia_graus(grafo);
-    
-    // for(int j = 0; j < grafo->vertices; j++){
-    //   ADJACENCIA* prox = (*grafo).adj[j].cabeca;
-    //   do{
-    //     printf("\n %f", prox->peso);
-    //     prox = prox->prox;
-    //   }while(prox != NULL);
-    // }
-
-
 
     for(int i = 0; i < ordem; i++){
       printf("\nExcentricidade do vertice %d = %f", i+1, BellmanFord(grafo, i));
     }
+
+    printf("\n\nRaio do grafo = %f", raio_grafo(grafo));
+    printf("\n\nDiametro do grafo = %f", diametro_grafo(grafo));
+
+    centro_grafo(grafo);
 }

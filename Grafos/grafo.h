@@ -38,3 +38,9 @@ void grau_vertice(GRAFO *grafo, int num);
 void sequencia_graus(GRAFO *grafo);
 
 float BellmanFord(GRAFO *grafo, int vertice);
+
+float raio_grafo(GRAFO *grafo);
+
+float diametro_grafo(GRAFO *grafo);
+
+void centro_grafo(GRAFO *grafo);
