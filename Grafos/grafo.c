@@ -151,9 +151,11 @@ float BellmanFord(GRAFO *grafo, int vertice){
 	int verticesCount = grafo->vertices;
 	int edgesCount = grafo->arestas;
 	float* distance = (float*)malloc(sizeof(float) * verticesCount);
+	int* verticePercorrido = (int*)malloc(sizeof(int) * verticesCount);
 
 	for (int i = 0; i < verticesCount; i++){
 		distance[i] = float_max;
+		// verticePercorrido[i] = 0;
 	}
 
 	distance[vertice] = 0;
@@ -170,6 +172,7 @@ float BellmanFord(GRAFO *grafo, int vertice){
 
 				if (distance[u] != float_max && distance[u] + weight < distance[v])
 					distance[v] = distance[u] + weight;
+					// verticePercorrido[u] = v;
 
 				
 
@@ -178,15 +181,6 @@ float BellmanFord(GRAFO *grafo, int vertice){
 		}
 	}
 
-	for(int j = 0; j < grafo->vertices; j++){
-		for(ADJACENCIA* prox = (*grafo).adj[j].cabeca; prox != NULL; prox = prox->prox){
-		
-
-		int u = j;
-		int v = prox->vertice;
-		float weight = prox->peso;
-		}
-	}
 	float maior_distancia = distance[0];
 	
 	for (int i = 1; i < grafo->vertices; i++){
@@ -194,7 +188,10 @@ float BellmanFord(GRAFO *grafo, int vertice){
 			maior_distancia = distance[i];	
 		}
 	}
-
+	// for (int i = 0; i < verticesCount; i++){
+	// 	printf("\nVertice %d passou por %d", i ,verticePercorrido[i]);
+	// }
+	
 	return maior_distancia;
 }
 
