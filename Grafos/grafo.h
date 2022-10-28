@@ -44,3 +44,5 @@ float raio_grafo(GRAFO *grafo);
 float diametro_grafo(GRAFO *grafo);
 
 void centro_grafo(GRAFO *grafo);
+
+float centralidadeProximidade(GRAFO *grafo, int vertice);

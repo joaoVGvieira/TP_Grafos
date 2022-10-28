@@ -32,4 +32,8 @@ int main(){
     printf("\n\nDiametro do grafo = %.2f", diametro_grafo(grafo));
 
     centro_grafo(grafo);
+
+    for(int i = 0; i < ordem; i++){
+      printf("\nCentralidade de proximidade do vertice %d = %.2f", i+1, centralidadeProximidade(grafo, i));
+    }
 }

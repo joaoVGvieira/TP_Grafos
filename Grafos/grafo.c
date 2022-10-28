@@ -240,3 +240,49 @@ void centro_grafo(GRAFO *grafo){
     }
 	return;
 }
+
+float centralidadeProximidade(GRAFO *grafo, int vertice){
+
+	float float_max = FLT_MAX;
+
+	int verticesCount = grafo->vertices;
+	int edgesCount = grafo->arestas;
+	float* distance = (float*)malloc(sizeof(float) * verticesCount);
+	int* verticePercorrido = (int*)malloc(sizeof(int) * verticesCount);
+
+	for (int i = 0; i < verticesCount; i++){
+		distance[i] = float_max;
+		// verticePercorrido[i] = 0;
+	}
+
+	distance[vertice] = 0;
+
+
+	for(int i = 1; i <= verticesCount; i ++){
+		for(int j = 0; j < verticesCount; j++){
+			ADJACENCIA* prox = (*grafo).adj[j].cabeca;
+			while(prox != NULL){
+
+				int u = j;
+				int v = prox->vertice;
+				float weight = prox->peso;
+
+				if (distance[u] != float_max && distance[u] + weight < distance[v])
+					distance[v] = distance[u] + weight;
+					// verticePercorrido[u] = v;
+
+				
+
+				prox = prox->prox;
+			}
+		}
+	}
+
+	float soma = 0;
+	
+	for (int i = 0; i < grafo->vertices; i++){
+		soma += distance[i];
+	}
+	
+	return (verticesCount-1)/soma;
+}
