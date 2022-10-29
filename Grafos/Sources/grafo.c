@@ -1,4 +1,4 @@
-#include "grafo.h"
+#include "../Libs/grafo.h"
 #include <math.h>
 #include <float.h>
 //funçao para criar um GRAFO
@@ -104,12 +104,10 @@ void imprime(GRAFO *grafo){
 }
 
 int ordem_grafo(GRAFO *grafo){
-	printf("\nOrdem do grafo: %d",grafo->vertices);
 	return grafo->vertices;
 }
 
 int tamanho_grafo(GRAFO *grafo){
-	printf("\nTamanho do grafo: %d\n", grafo->arestas);
 	return grafo->arestas;
 }
 
@@ -118,10 +116,10 @@ void vizinho_vertice(GRAFO *grafo, int num){
 	for(i=0; i< grafo->vertices; i++){
 		if (i == num)
 		{
-			printf("Vizinhos de %d: ",i+1);
+			printf("\n\nVizinhos de %d: ",i);
 			ADJACENCIA *ad = grafo->adj[i].cabeca; //chamo a cebeça da lista de adjacencia desta aresta
 			while(ad){ //enquanto as adjacencias nao forem nula
-				printf("%d ",ad->vertice+1); //imprimir a adjacencia e o peso
+				printf("%d ",ad->vertice); //imprimir a adjacencia e o peso
 				ad=ad->prox; //vai para a proxima adjacencia
 			}
 			printf("\n");
@@ -135,7 +133,7 @@ void grau_vertice(GRAFO *grafo, int num){
 	for(i=0; i< grafo->vertices; i++){
 		if (i == num)
 		{
-			printf("Grau do vertice %d: ",i+1);
+			printf("\nGrau do vertice %d: ",i);
 			ADJACENCIA *ad = grafo->adj[i].cabeca; //chamo a cebeça da lista de adjacencia desta aresta
 			while(ad){ //enquanto as adjacencias nao forem nula
 				cont++;
@@ -178,7 +176,7 @@ void sequencia_graus(GRAFO *grafo){
 	printf("\n");
 }
 
-float BellmanFord(GRAFO *grafo, int vertice){
+float execetridade_grafo(GRAFO *grafo, int vertice){
 
 	float float_max = FLT_MAX;
 
@@ -189,7 +187,6 @@ float BellmanFord(GRAFO *grafo, int vertice){
 
 	for (int i = 0; i < verticesCount; i++){
 		distance[i] = float_max;
-		// verticePercorrido[i] = 0;
 	}
 
 	distance[vertice] = 0;
@@ -206,10 +203,6 @@ float BellmanFord(GRAFO *grafo, int vertice){
 
 				if (distance[u] != float_max && distance[u] + weight < distance[v])
 					distance[v] = distance[u] + weight;
-					// verticePercorrido[u] = v;
-
-				
-
 				prox = prox->prox;
 			}
 		}
@@ -235,10 +228,7 @@ float BellmanFord(GRAFO *grafo, int vertice){
 		}
 	}
 	
-	// for (int i = 0; i < verticesCount; i++){
-	// 	printf("\nVertice %d passou por %d", i ,verticePercorrido[i]);
-	// }
-	printf("a maior distancia eh %.2f\n", maior_distancia);
+	//printf("\nA soma da maior distancia %.2f\n", maior_distancia);
 	return maior_distancia;
 }
 
@@ -248,11 +238,11 @@ float raio_grafo(GRAFO *grafo){
 
 	for(int i = 0; i < grafo->vertices; i++){
 		if(i == 0){
-			raio = BellmanFord(grafo, i);
+			raio = execetridade_grafo(grafo, i);
 			vertice = 0;
 		}
-		if(BellmanFord(grafo, i) < raio){
-			raio = BellmanFord(grafo, i);
+		if(execetridade_grafo(grafo, i) < raio){
+			raio = execetridade_grafo(grafo, i);
 			vertice = i;
 		}
 	}
@@ -266,11 +256,11 @@ float diametro_grafo(GRAFO *grafo){
 
 	for(int i = 0; i < grafo->vertices; i++){
 		if(i == 0){
-			diametro = BellmanFord(grafo, i);
+			diametro = execetridade_grafo(grafo, i);
 			vertice = 0;
 		}
-		if(BellmanFord(grafo, i) > diametro){
-			diametro = BellmanFord(grafo, i);
+		if(execetridade_grafo(grafo, i) > diametro){
+			diametro = execetridade_grafo(grafo, i);
 			vertice = i;
 		}
 	}
@@ -281,7 +271,7 @@ float diametro_grafo(GRAFO *grafo){
 void centro_grafo(GRAFO *grafo){
 	printf("\nVertices que fazer parte do centro: ");
     for(int i = 0; i < grafo->vertices; i++){
-      	if(BellmanFord(grafo, i) == raio_grafo(grafo)){
+      	if(execetridade_grafo(grafo, i) == raio_grafo(grafo)){
         	printf("%d ", i+1);
       	}
     }
@@ -358,7 +348,7 @@ void preparaBuscaProfundidade(GRAFO *grafo, int ini){
     int i, cont = 1;
     printf("\nSequencia de vertices visitados na Busca em Profundidade\n %d ",ini);
     buscaProfundidade(grafo,ini, visitadoo,cont);
-
+	printf("\n");
     for(int j = 0; j < grafo->vertices; j++){
             ADJACENCIA* prox = (*grafo).adj[j].cabeca;
             while(prox != NULL){
@@ -416,38 +406,3 @@ float procuraMenorDistancia(GRAFO *grafo, int vertice){
     return menor;
 }
 
-void menorCaminho(GRAFO *gr, int ini, int *ant, float *dist){
-    float float_min = FLT_MIN;
-    int i, cont, NV, ind, *visitado;
-	float vert;
-    cont = NV = gr->vertices;
-    visitado = (int*) malloc(NV * sizeof(int));
-    
-    for(i=0; i < NV; i++){
-        ant[i] = float_min ;
-        dist[i] = float_min;
-        visitado[i] = 0;
-    }
-    dist[ini] = 0;
-    while(cont > 0){
-        vert = procuraMenorDistancia(gr, ini);
-        if(vert == (int)float_min)
-            break;
-
-        visitado[(int)vert] = 1;
-        cont--;
-        ADJACENCIA* prox = (*gr).adj[(int)vert].cabeca;
-        for(i=0; i<prox->vertice; i++){
-            ind = prox->peso;
-            if(dist[ind] == float_min){
-               dist[ind] =  prox->peso;
-               ant[ind] = vert;
-            }else{
-                if(dist[ind] >  prox->peso){
-                    dist[ind] =   prox->peso;
-                    ant[ind] = vert;
-                }
-            }
-        }
-    }
-} 

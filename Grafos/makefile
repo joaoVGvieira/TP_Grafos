@@ -1,3 +1,3 @@
 all:  
-	gcc main.c  grafo.c -o a
+	gcc main.c  Sources/grafo.c  Sources/menu.c -o a
 	./a

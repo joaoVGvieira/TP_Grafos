@@ -39,7 +39,7 @@ void grau_vertice(GRAFO *grafo, int num);
 
 void sequencia_graus(GRAFO *grafo);
 
-float BellmanFord(GRAFO *grafo, int vertice);
+float execetridade_grafo(GRAFO *grafo, int vertice);
 
 float raio_grafo(GRAFO *grafo);
 
