@@ -338,66 +338,6 @@ float centralidadeProximidade(GRAFO *grafo, int vertice){
 	return (verticesCount-1)/soma;
 }
 
-void Caminho(GRAFO *grafo, int vertice){
-
-	float float_max = FLT_MAX;
-
-	int verticesCount = grafo->vertices;
-	int edgesCount = grafo->arestas;
-	float* distance = (float*)malloc(sizeof(float) * verticesCount);
-	int* verticePercorrido = (int*)malloc(sizeof(int) * verticesCount);
-	int caminho[verticesCount];
-	for (int i = 0; i < verticesCount; i++){
-		distance[i] = float_max;
-		
-	}
-
-	distance[vertice] = 0;
-	int cont =0;
-	for(int i = 1; i <= verticesCount; i ++){
-		for(int j = 0; j < verticesCount; j++){
-			ADJACENCIA* prox = (*grafo).adj[j].cabeca;
-			while(prox != NULL){
-
-				int u = j;
-				int v = prox->vertice;
-				float weight = prox->peso;
-
-				if (distance[u] != float_max && distance[u] + weight < distance[v]){
-					distance[v] = distance[u] + weight;
-					caminho[cont] = v;
-					cont++;
-				}
-				prox = prox->prox;
-			}
-		}
-	}
-	for(int  i = 0; i < cont; i++ )
-    {
-        for(int j = i + 1; j < cont; )
-        {
-            if( caminho[j] == caminho[i] )
-            {
-                for( int k = j; k < cont; k++ )
-                    caminho[k] = caminho[k + 1];
-
-                cont--;
-            }
-            else
-            {
-                j++;
-            }
-        }
-    }
-	printf("Caminho de %d: ",vertice+1);
-	for ( int i = 0; i < cont; i++)
-	{
-		
-		printf("%d ",caminho[i]+1);
-	}
-	printf("\n");
-}
-
 void buscaProfundidade(GRAFO *grafo, int ini, int *visitado, int cont){
     int i;
     visitado[ini] = cont; //Prenchendo os vertices visitados com o numero referente a ordem em que foram visitados
@@ -436,7 +376,7 @@ float procuraMenorDistancia(GRAFO *grafo, int vertice){
 
 	for (int i = 0; i < verticesCount; i++){
 		distance[i] = float_max;
-		// verticePercorrido[i] = 0;
+
 	}
 
 	distance[vertice] = 0;
@@ -453,10 +393,6 @@ float procuraMenorDistancia(GRAFO *grafo, int vertice){
 
 				if (distance[u] != float_max && distance[u] + weight < distance[v])
 					distance[v] = distance[u] + weight;
-					// verticePercorrido[u] = v;
-
-				
-
 				prox = prox->prox;
 			}
 		}
@@ -471,7 +407,7 @@ float procuraMenorDistancia(GRAFO *grafo, int vertice){
 	}
 	
     return menor;
-} 
+} /*
 void menorCaminho(GRAFO *gr, int ini, int *ant, float *dist){
     float float_min = FLT_MIN;
     int i, cont, NV, ind, *visitado;
@@ -485,9 +421,8 @@ void menorCaminho(GRAFO *gr, int ini, int *ant, float *dist){
         visitado[i] = 0;
     }
     dist[ini] = 0;
-	printf("Vertices visitados: ");
     while(cont > 0){
-        vert = procuraMenorDistancia(dist, ini);
+        vert = procuraMenorDistancia(gr, ini);
         if(vert == (int)float_min)
             break;
 
@@ -495,7 +430,6 @@ void menorCaminho(GRAFO *gr, int ini, int *ant, float *dist){
         cont--;
         ADJACENCIA* prox = (*gr).adj[(int)vert].cabeca;
         for(i=0; i<prox->vertice; i++){
-            //ADJACENCIA* viz = (*gr).adj[i].cabeca;
             ind = prox->peso;
             if(dist[ind] == float_min){
                dist[ind] =  prox->peso;
@@ -508,10 +442,4 @@ void menorCaminho(GRAFO *gr, int ini, int *ant, float *dist){
             }
         }
     }
-	for (int i = 0; i < NV; i++)
-	{
-		printf("dist[%d]=%f\n",i,dist[i]);
-		printf("ant[%d]=%d\n",i,ant[i]);
-		printf("visitado[%d]=%d\n\n\n",i,visitado[i]);
-	}
-} 
+} */
