@@ -5,8 +5,9 @@
 typedef struct adjacencia {
     int vertice; // vertice de destino 
     float peso; // peso associado a aresta que leva ao vertice de destino
+    int visited;
     struct adjacencia *prox; // O proximo elemento da lista de adjacencias
-    int visitado;
+
 }ADJACENCIA;
 
 typedef struct vertice {

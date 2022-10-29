@@ -23,8 +23,8 @@ ADJACENCIA* criaListaadj(int v, float peso){
 	ADJACENCIA *temp = (ADJACENCIA *) malloc (sizeof(ADJACENCIA)); //aloca espaço para um no
 	temp->vertice = v; //vertice alvo da adjacencia
 	temp->peso = peso; //peso da aresta
+	temp->visited = 0;
 	temp->prox = NULL; 
-	temp->visitado = 0;
 	return(temp); //retorna endereço da adjacencia
 }
 
@@ -407,6 +407,7 @@ void buscaProfundidade(GRAFO *grafo, int ini, int *visitado, int cont){
     while(prox != NULL){ //Percorrendo as arestas do vertice ''ini''
 
         if(visitado[prox->vertice] == 0){ // se nao visitado
+			prox->visited = 1;
             printf("-> %d ", prox->vertice);
             buscaProfundidade(grafo,prox->vertice,visitado,cont+1);
 
@@ -417,14 +418,9 @@ void buscaProfundidade(GRAFO *grafo, int ini, int *visitado, int cont){
 
 void preparaBuscaProfundidade(GRAFO *grafo, int ini){
 
-	for(int i = 0; i < grafo->vertices; i ++){
-		
-	}
-
-    int* visitado = (int*)calloc(grafo->vertices , sizeof(int));
+    int* visitadoo = (int*)calloc(grafo->vertices , sizeof(int));
     int i, cont = 1;
 	printf("\nSequencia de vertices visitados na Busca em Profundidade\n %d ",ini);
-    buscaProfundidade(grafo,ini, visitado,cont);
-    // for(i=0; i < grafo->vertices; i++)
-    //     printf("%d -> %d\n",i, visitado[i]);
+    buscaProfundidade(grafo,ini, visitadoo,cont);
+
 }
