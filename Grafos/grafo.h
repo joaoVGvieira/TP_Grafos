@@ -54,3 +54,5 @@ void Caminho(GRAFO *grafo, int vertice);
 void buscaProfundidade(GRAFO*grafo, int ini, int *visitado, int cont);
 
 void preparaBuscaProfundidade(GRAFO *grafo, int ini);
+
+float procuraMenorDistancia(GRAFO *grafo, int vertice);

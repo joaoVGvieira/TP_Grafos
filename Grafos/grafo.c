@@ -178,10 +178,6 @@ void sequencia_graus(GRAFO *grafo){
 	printf("\n");
 }
 
-void exetricidade_do_grafo(GRAFO *grafo, int vet1){
-	
-}
-
 float BellmanFord(GRAFO *grafo, int vertice){
 
 	float float_max = FLT_MAX;
@@ -388,10 +384,10 @@ float procuraMenorDistancia(GRAFO *grafo, int vertice){
 		distance[i] = float_max;
 
 	}
-
+	
 	distance[vertice] = 0;
-
-
+	int vets[vertice];
+	int cont=0;
 	for(int i = 1; i <= verticesCount; i ++){
 		for(int j = 0; j < verticesCount; j++){
 			ADJACENCIA* prox = (*grafo).adj[j].cabeca;
@@ -401,15 +397,16 @@ float procuraMenorDistancia(GRAFO *grafo, int vertice){
 				int v = prox->vertice;
 				float weight = prox->peso;
 
-				if (distance[u] != float_max && distance[u] + weight < distance[v])
+				if (distance[u] != float_max && distance[u] + weight < distance[v]){
+					
 					distance[v] = distance[u] + weight;
+				}
 				prox = prox->prox;
 			}
 		}
 	}
 	float menor= distance[0];
-	
-	for (int i = 1; i < grafo->vertices; i++){
+	for (int i = verticesCount; i >0; i--){
 		if(distance[i] < menor){
 			menor = distance[i];	
 		}
@@ -418,6 +415,7 @@ float procuraMenorDistancia(GRAFO *grafo, int vertice){
 	
     return menor;
 }
+
 void menorCaminho(GRAFO *gr, int ini, int *ant, float *dist){
     float float_min = FLT_MIN;
     int i, cont, NV, ind, *visitado;
