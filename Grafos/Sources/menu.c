@@ -14,8 +14,8 @@ void menu_principal(){
     printf("10.Retornar o centro do grafo\n");
     printf("11.Sequencia de busca de profudidade\n");
     printf("12.Retornar a distancia de um vetice\n");
-    printf("13.CAinho nao fez\n");
+    printf("13.Retnor Camiho de um vertice\n");
     printf("14.Retornar a centralidade de um vetice\n");
-    printf("x.Imprime o grafo\n");
+    printf("15.Imprime o grafo\n");
     printf("Digite sua opcao = ");
 }

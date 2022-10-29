@@ -56,3 +56,11 @@ void buscaProfundidade(GRAFO*grafo, int ini, int *visitado, int cont);
 void preparaBuscaProfundidade(GRAFO *grafo, int ini);
 
 float procuraMenorDistancia(GRAFO *grafo, int vertice);
+
+void relaxa(GRAFO *grafo, float *distancia, int *antecessor, int verticeOrigem, int verticeDestino);
+
+int existeAberto(GRAFO *grafo, int *aberto);
+
+int MenorDistancia(GRAFO *grafo, int *aberto, float *distancia);
+
+void Dijkstra(GRAFO *grafo, int verticeOrigem);

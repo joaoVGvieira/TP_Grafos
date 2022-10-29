@@ -93,6 +93,12 @@ int main(){
          printf("\n\n");
         break;
         case 6:
+            if (fp==NULL)
+         {
+           printf("\n\nNao existe grafo !!!!\n\n");
+         }
+         else
+         {
            printf("\nDigite qual vertice vc quer saber o grau :");
            scanf("%d",&v);
            if (v<0 || v > ordem_grafo(grafo)-1)
@@ -104,8 +110,15 @@ int main(){
               grau_vertice(grafo,v);
            }
            printf("\n");
+         }
         break;
         case 7:
+         if (fp==NULL)
+         {
+           printf("\n\nNao existe grafo !!!!\n\n");
+         }
+         else
+         {
          printf("\nDigite qual vertice vc quer saber o excentricidade :");
          scanf("%d",&v);
            if (v<0 || v > ordem_grafo(grafo)-1)
@@ -117,6 +130,7 @@ int main(){
               execetridade_grafo(grafo,v);
            }
            printf("\n");
+         }
         break;
         case 8:
          if (fp==NULL)
@@ -155,6 +169,12 @@ int main(){
          printf("\n\n");
         break;
         case 11:
+         if (fp==NULL)
+         {
+           printf("\n\nNao existe grafo !!!!\n\n");
+         }
+         else
+         {
           printf("\nDigite qual vertice vc quer saber a profudidade :");
           scanf("%d",&v);
            if (v<0 || v > ordem_grafo(grafo)-1)
@@ -166,8 +186,15 @@ int main(){
               preparaBuscaProfundidade(grafo,v);
            }
            printf("\n");
+         }
           break;
         case 12:
+         if (fp==NULL)
+         {
+           printf("\n\nNao existe grafo !!!!\n\n");
+         }
+         else
+         {
           printf("\nDigite qual vertice vc quer saber a distancia :");
           scanf("%d",&v);
            if (v<0 || v > ordem_grafo(grafo)-1)
@@ -179,8 +206,35 @@ int main(){
               procuraMenorDistancia(grafo,v);
            }
            printf("\n");
+         }
+          break;
+         case 13:
+          if (fp==NULL)
+         {
+           printf("\n\nNao existe grafo !!!!\n\n");
+         }
+         else
+         {
+          printf("\nDigite qual vertice vc quer saber o caminho :");
+          scanf("%d",&v);
+           if (v<0 || v > ordem_grafo(grafo)-1)
+           {
+             printf("\n\nNao tem esse vertice no grafo!!!\n\n");
+           }
+           else
+           {
+              Dijkstra(grafo,v);
+           }
+           printf("\n");
+         }
           break;
         case 14:
+           if (fp==NULL)
+         {
+           printf("\n\nNao existe grafo !!!!\n\n");
+         }
+         else
+         {
           printf("\nDigite qual vertice vc quer saber a centralidade :");
           scanf("%d",&v);
            if (v<0 || v > ordem_grafo(grafo)-1)
@@ -192,7 +246,20 @@ int main(){
               printf("centralidade do vertice %d do grafo:%2.f\n",v,centralidadeProximidade(grafo,v));
            }
            printf("\n");
+         }
           break;
+         case 15:
+           if (fp==NULL)
+         {
+           printf("\n\nNao existe grafo !!!!\n\n");
+         }
+         else
+         {
+          printf("\n");
+          imprime(grafo);
+           printf("\n");
+         }
+          break; 
         case 0:
            printf("\n\nVolte Sempre!!!!\n\n");
         break;

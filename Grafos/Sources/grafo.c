@@ -1,6 +1,9 @@
 #include "../Libs/grafo.h"
 #include <math.h>
 #include <float.h>
+
+#define INT_MAX   (2147483647)
+
 //funçao para criar um GRAFO
 GRAFO *criaGrafo (int v) {
 	int i;
@@ -406,3 +409,67 @@ float procuraMenorDistancia(GRAFO *grafo, int vertice){
     return menor;
 }
 
+void relaxa(GRAFO *grafo, float *distancia, int *antecessor, int verticeOrigem, int verticeDestino){
+    ADJACENCIA *aux = grafo->adj[verticeOrigem].cabeca;
+
+    while(aux->vertice != verticeDestino && aux) aux = aux->prox;
+
+    if(aux != NULL){
+        if(distancia[verticeDestino] > distancia[verticeOrigem] + aux->peso){
+            distancia[verticeDestino] = distancia[verticeOrigem] + aux->peso;
+            antecessor[verticeDestino] = verticeOrigem;
+        }
+    }
+    return;
+}
+
+int existeAberto(GRAFO *grafo, int *aberto){
+    for(int i = 0; i< grafo->vertices; i++) if(aberto[i]) return(1);
+    return(0);  
+}
+
+int MenorDistancia(GRAFO *grafo, int *aberto, float *distancia){
+    int i;
+    for(i = 0; grafo->vertices; i++) if(aberto[i]) break;
+    
+    if(i == grafo->vertices) return -1;
+
+    int menor = i;
+
+    for(i = menor + 1; i < grafo->vertices; i++){
+        if(aberto[i] && distancia[menor] > distancia[i]) menor = i;
+    }
+    return menor;
+
+}
+
+void Dijkstra(GRAFO *grafo, int verticeOrigem){
+
+    float *distancia = (float*)malloc(grafo->vertices * sizeof(float));
+    int *antecessor = (int*)malloc(grafo->vertices * sizeof(int));
+    int *aberto = (int*)malloc(grafo->vertices * sizeof(int));
+
+    for(int i = 0; i < grafo->vertices; i++){
+        distancia[i] = INT_MAX/2;
+        antecessor[i] = -1;
+        aberto[i] = 1;
+    } 
+    distancia[verticeOrigem] = 0;
+
+    //Comeca algoritmo dijkstra
+
+    while(existeAberto(grafo, aberto)){
+        int u = MenorDistancia(grafo, aberto, distancia);
+        aberto[u] = 0;
+        ADJACENCIA* ad = grafo->adj[u].cabeca;
+        while(ad != NULL){
+            relaxa(grafo, distancia, antecessor, u, ad->vertice);
+            ad = ad->prox;
+        }
+    }
+
+    for(int i = 0; i < grafo->vertices; i++){
+        printf("\n antecessor[%d] = %d", i, antecessor[i]);
+    }
+
+}
