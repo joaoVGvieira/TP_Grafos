@@ -424,3 +424,94 @@ void preparaBuscaProfundidade(GRAFO *grafo, int ini){
     buscaProfundidade(grafo,ini, visitadoo,cont);
 
 }
+
+
+float procuraMenorDistancia(GRAFO *grafo, int vertice){
+    float float_max = FLT_MAX;
+	
+	int verticesCount = grafo->vertices;
+	int edgesCount = grafo->arestas;
+	float* distance = (float*)malloc(sizeof(float) * verticesCount);
+	int* verticePercorrido = (int*)malloc(sizeof(int) * verticesCount);
+
+	for (int i = 0; i < verticesCount; i++){
+		distance[i] = float_max;
+		// verticePercorrido[i] = 0;
+	}
+
+	distance[vertice] = 0;
+
+
+	for(int i = 1; i <= verticesCount; i ++){
+		for(int j = 0; j < verticesCount; j++){
+			ADJACENCIA* prox = (*grafo).adj[j].cabeca;
+			while(prox != NULL){
+
+				int u = j;
+				int v = prox->vertice;
+				float weight = prox->peso;
+
+				if (distance[u] != float_max && distance[u] + weight < distance[v])
+					distance[v] = distance[u] + weight;
+					// verticePercorrido[u] = v;
+
+				
+
+				prox = prox->prox;
+			}
+		}
+	}
+	float menor= distance[0];
+	
+	for (int i = 1; i < grafo->vertices; i++){
+		if(distance[i] < menor){
+			menor = distance[i];	
+		}
+		printf("%f\n",distance[i]);
+	}
+	
+    return menor;
+} 
+void menorCaminho(GRAFO *gr, int ini, int *ant, float *dist){
+    float float_min = FLT_MIN;
+    int i, cont, NV, ind, *visitado;
+	float vert;
+    cont = NV = gr->vertices;
+    visitado = (int*) malloc(NV * sizeof(int));
+    
+    for(i=0; i < NV; i++){
+        ant[i] = float_min ;
+        dist[i] = float_min;
+        visitado[i] = 0;
+    }
+    dist[ini] = 0;
+	printf("Vertices visitados: ");
+    while(cont > 0){
+        vert = procuraMenorDistancia(dist, ini);
+        if(vert == (int)float_min)
+            break;
+
+        visitado[(int)vert] = 1;
+        cont--;
+        ADJACENCIA* prox = (*gr).adj[(int)vert].cabeca;
+        for(i=0; i<prox->vertice; i++){
+            //ADJACENCIA* viz = (*gr).adj[i].cabeca;
+            ind = prox->peso;
+            if(dist[ind] == float_min){
+               dist[ind] =  prox->peso;
+               ant[ind] = vert;
+            }else{
+                if(dist[ind] >  prox->peso){
+                    dist[ind] =   prox->peso;
+                    ant[ind] = vert;
+                }
+            }
+        }
+    }
+	for (int i = 0; i < NV; i++)
+	{
+		printf("dist[%d]=%f\n",i,dist[i]);
+		printf("ant[%d]=%d\n",i,ant[i]);
+		printf("visitado[%d]=%d\n\n\n",i,visitado[i]);
+	}
+} 
