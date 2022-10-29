@@ -24,7 +24,7 @@ int main(){
     vizinho_vertice(grafo,4);
     grau_vertice(grafo,4);
     sequencia_graus(grafo);
-    Caminho(grafo, 2);   
+   // Caminho(grafo, 2);   
     
    /*printf("\n\nRaio do grafo = %.2f", raio_grafo(grafo));
    printf("\n\nDiametro do grafo = %.2f", diametro_grafo(grafo));
@@ -38,8 +38,8 @@ int main(){
 
 
     //void menorCaminho_Grafo(grafo, 0, int *ant, float *dist){
-
-    preparaBuscaProfundidade(grafo, 2);*/
+*/
+    preparaBuscaProfundidade(grafo, 0);
 
 
 }

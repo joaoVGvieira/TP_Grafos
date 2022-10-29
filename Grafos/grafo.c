@@ -347,7 +347,7 @@ void buscaProfundidade(GRAFO *grafo, int ini, int *visitado, int cont){
     while(prox != NULL){ //Percorrendo as arestas do vertice ''ini''
 
         if(visitado[prox->vertice] == 0){ // se nao visitado
-			prox->visited = 1;
+            prox->visited = 1;
             printf("-> %d ", prox->vertice);
             buscaProfundidade(grafo,prox->vertice,visitado,cont+1);
 
@@ -360,11 +360,21 @@ void preparaBuscaProfundidade(GRAFO *grafo, int ini){
 
     int* visitadoo = (int*)calloc(grafo->vertices , sizeof(int));
     int i, cont = 1;
-	printf("\nSequencia de vertices visitados na Busca em Profundidade\n %d ",ini);
+    printf("\nSequencia de vertices visitados na Busca em Profundidade\n %d ",ini);
     buscaProfundidade(grafo,ini, visitadoo,cont);
 
-}
+    for(int j = 0; j < grafo->vertices; j++){
+            ADJACENCIA* prox = (*grafo).adj[j].cabeca;
+            while(prox != NULL){
+                if(prox->visited == 0){
+                    printf("Aresta de origem em %d e destino %d nao foi visitada\n", j, prox->vertice);
 
+                }
+				prox = prox->prox;
+            }
+
+}
+}
 
 float procuraMenorDistancia(GRAFO *grafo, int vertice){
     float float_max = FLT_MAX;
@@ -407,7 +417,7 @@ float procuraMenorDistancia(GRAFO *grafo, int vertice){
 	}
 	
     return menor;
-} /*
+}
 void menorCaminho(GRAFO *gr, int ini, int *ant, float *dist){
     float float_min = FLT_MIN;
     int i, cont, NV, ind, *visitado;
@@ -442,4 +452,4 @@ void menorCaminho(GRAFO *gr, int ini, int *ant, float *dist){
             }
         }
     }
-} */
+} 
