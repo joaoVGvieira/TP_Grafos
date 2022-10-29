@@ -23,17 +23,25 @@ int main(){
     vizinho_vertice(grafo,4);
     grau_vertice(grafo,4);
     sequencia_graus(grafo);
-    BellmanFord(grafo, 0);   
-    for(int i = 0; i < ordem; i++){
-      printf("\nExcentricidade do vertice %d = %.2f", i+1, BellmanFord(grafo, i));
-    }
+    Caminho(grafo, 2);   
+    int ant[ordem];
+    float dist[ordem];
+   // printf("\n\nRaio do grafo = %.2f", raio_grafo(grafo));
+   // printf("\n\nDiametro do grafo = %.2f", diametro_grafo(grafo));
 
-    printf("\n\nRaio do grafo = %.2f", raio_grafo(grafo));
-    printf("\n\nDiametro do grafo = %.2f", diametro_grafo(grafo));
+    //centro_grafo(grafo);
 
-    centro_grafo(grafo);
-
-    for(int i = 0; i < ordem; i++){
+    /*for(int i = 0; i < ordem; i++){
       printf("\nCentralidade de proximidade do vertice %d = %.2f", i+1, centralidadeProximidade(grafo, i));
-    }
+    }*
+    printf("\n");
+
+    //void menorCaminho_Grafo(grafo, 0, int *ant, float *dist){
+      */
+
+
 }
+
+
+
+

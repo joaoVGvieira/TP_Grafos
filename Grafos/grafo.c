@@ -1,4 +1,3 @@
-
 #include "grafo.h"
 #include <math.h>
 #include <float.h>
@@ -180,6 +179,18 @@ float BellmanFord(GRAFO *grafo, int vertice){
 			}
 		}
 	}
+	for (int i = 0; i < grafo->vertices; i++){
+		ADJACENCIA* prox = (*grafo).adj[i].cabeca;
+		int u = i;
+		int v = prox->vertice;
+		float weight = prox->peso;
+		if (distance[u] == float_max || distance[u] + weight < distance[v]){
+			printf("\nEste gráfico contém um ciclo de aresta negativa\n");
+			return 0.1;
+
+		}
+				 		
+	}
 
 	float maior_distancia = distance[0];
 	
@@ -188,10 +199,11 @@ float BellmanFord(GRAFO *grafo, int vertice){
 			maior_distancia = distance[i];	
 		}
 	}
+	
 	// for (int i = 0; i < verticesCount; i++){
 	// 	printf("\nVertice %d passou por %d", i ,verticePercorrido[i]);
 	// }
-	
+	printf("a maior distancia eh %.2f\n", maior_distancia);
 	return maior_distancia;
 }
 
@@ -263,7 +275,7 @@ float centralidadeProximidade(GRAFO *grafo, int vertice){
 			ADJACENCIA* prox = (*grafo).adj[j].cabeca;
 			while(prox != NULL){
 
-				int u = j;
+				int u = j;	
 				int v = prox->vertice;
 				float weight = prox->peso;
 
@@ -285,4 +297,64 @@ float centralidadeProximidade(GRAFO *grafo, int vertice){
 	}
 	
 	return (verticesCount-1)/soma;
+}
+
+void Caminho(GRAFO *grafo, int vertice){
+
+	float float_max = FLT_MAX;
+
+	int verticesCount = grafo->vertices;
+	int edgesCount = grafo->arestas;
+	float* distance = (float*)malloc(sizeof(float) * verticesCount);
+	int* verticePercorrido = (int*)malloc(sizeof(int) * verticesCount);
+	int caminho[verticesCount];
+	for (int i = 0; i < verticesCount; i++){
+		distance[i] = float_max;
+		
+	}
+
+	distance[vertice] = 0;
+	int cont =0;
+	for(int i = 1; i <= verticesCount; i ++){
+		for(int j = 0; j < verticesCount; j++){
+			ADJACENCIA* prox = (*grafo).adj[j].cabeca;
+			while(prox != NULL){
+
+				int u = j;
+				int v = prox->vertice;
+				float weight = prox->peso;
+
+				if (distance[u] != float_max && distance[u] + weight < distance[v]){
+					distance[v] = distance[u] + weight;
+					caminho[cont] = v;
+					cont++;
+				}
+				prox = prox->prox;
+			}
+		}
+	}
+	for(int  i = 0; i < cont; i++ )
+    {
+        for(int j = i + 1; j < cont; )
+        {
+            if( caminho[j] == caminho[i] )
+            {
+                for( int k = j; k < cont; k++ )
+                    caminho[k] = caminho[k + 1];
+
+                cont--;
+            }
+            else
+            {
+                j++;
+            }
+        }
+    }
+	printf("Caminho de %d: ",vertice+1);
+	for ( int i = 0; i < cont; i++)
+	{
+		
+		printf("%d ",caminho[i]+1);
+	}
+	printf("\n");
 }
