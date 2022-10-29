@@ -48,3 +48,7 @@ void centro_grafo(GRAFO *grafo);
 float centralidadeProximidade(GRAFO *grafo, int vertice);
 
 void Caminho(GRAFO *grafo, int vertice);
+
+void buscaProfundidade(GRAFO *grafo, int ini, int *visitado, int cont);
+
+void preparaBuscaProfundidade(GRAFO *grafo, int ini);

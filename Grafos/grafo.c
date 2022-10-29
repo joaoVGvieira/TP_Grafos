@@ -358,3 +358,30 @@ void Caminho(GRAFO *grafo, int vertice){
 	}
 	printf("\n");
 }
+
+void buscaProfundidade(GRAFO *grafo, int ini, int *visitado, int cont){
+    int i;
+    visitado[ini] = cont; //Prenchendo os vertices visitados com o numero referente a ordem em que foram visitados
+
+    ADJACENCIA* prox = (*grafo).adj[ini].cabeca;
+
+    while(prox != NULL){ //Percorrendo as arestas do vertice ''ini''
+
+        if(visitado[prox->vertice] == 0){ // se nao visitado
+            printf("%d -> ", prox->vertice);
+            buscaProfundidade(grafo,prox->vertice,visitado,cont+1);
+
+        }
+        prox = prox-> prox;
+    }
+}
+
+void preparaBuscaProfundidade(GRAFO *grafo, int ini){
+    int* visitado = (int*)calloc(grafo->vertices , sizeof(int));
+    int i, cont = 1;
+    printf("%d -> ", ini);
+    buscaProfundidade(grafo,ini, visitado,cont);
+    printf("\n");
+    for(i=0; i < grafo->vertices; i++)
+        printf("%d -> %d\n",i, visitado[i]);
+}
