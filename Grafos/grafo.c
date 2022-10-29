@@ -1,7 +1,6 @@
 #include "grafo.h"
 #include <math.h>
 #include <float.h>
-
 //funçao para criar um GRAFO
 GRAFO *criaGrafo (int v) {
 	int i;
@@ -20,30 +19,70 @@ GRAFO *criaGrafo (int v) {
 
 //funçao para adicionar arestas no GRAFO
 
-ADJACENCIA *criaListaadj(int v, float peso){ 
+ADJACENCIA* criaListaadj(int v, float peso){ 
 	ADJACENCIA *temp = (ADJACENCIA *) malloc (sizeof(ADJACENCIA)); //aloca espaço para um no
 	temp->vertice = v; //vertice alvo da adjacencia
 	temp->peso = peso; //peso da aresta
 	temp->prox = NULL; 
-	return(temp); //retorno endereço da adjacencia
+	temp->visitado = 0;
+	return(temp); //retorna endereço da adjacencia
 }
 
-void criaAresta(GRAFO *grafo, int verticeInicial, int verticeFinal, float p) { //vai de verticeInicial a verticeFinal
-	if(!grafo) return;  //ver se o grafo existe
-	if((verticeFinal<0)||(verticeFinal >= grafo->vertices))return; //validade pra ver se os valores nao sao negativos
-	if((verticeInicial<0)||(verticeInicial >= grafo->vertices))return; //ou maiores que o numero de vertices do grafo
+void criaAresta(GRAFO *grafo, int verticeInicial, int verticeFinal, float p){ 
+
+
+
+	if(!grafo) return;  
+
+	if((verticeFinal<0)||(verticeFinal >= grafo->vertices))return;
+	if((verticeInicial<0)||(verticeInicial >= grafo->vertices))return;
 	
-	ADJACENCIA *novo = criaListaadj(verticeFinal,p); //crio adjacencia com o vertice final e o peso
-	//coloco a adjacencia na lista do vertice inicial
-	novo->prox = grafo->adj[verticeInicial].cabeca; //o campo prox da adjacencia vai apontar para quem a cabeça da lista apontava
-	grafo->adj[verticeInicial].cabeca=novo; // e a cabeça da lista passa a apontar para o novo elemento
+	ADJACENCIA *novo = criaListaadj(verticeFinal,p); 
 
-	novo = criaListaadj(verticeInicial,p); //crio adjacencia com o vertice final e o peso
-	//coloco a adjacencia na lista do vertice inicial
-	novo->prox = grafo->adj[verticeFinal].cabeca; //o campo prox da adjacencia vai receber a cabeça da lista
-	grafo->adj[verticeFinal].cabeca=novo; // e a cabeça da lista passa a ser o novo elemento
-	grafo->arestas++; // atualiza o numero de aresta no grafo
+	if(grafo->adj[verticeInicial].cabeca == NULL){ // lista vazia 
+		novo->prox = grafo->adj[verticeInicial].cabeca; 
+		grafo->adj[verticeInicial].cabeca=novo;
 
+	}else if(novo->vertice < grafo->adj[verticeInicial].cabeca->vertice){ // novo é o menor item da lista
+
+		novo->prox = grafo->adj[verticeInicial].cabeca;
+		grafo->adj[verticeInicial].cabeca = novo;
+
+	}else{ //novo esta no meio ou no final da lista
+
+		ADJACENCIA *aux = grafo->adj[verticeInicial].cabeca;
+
+		while(aux->prox != NULL && novo->vertice > aux->prox->vertice) aux = aux->prox;
+
+		novo->prox = aux->prox;
+		aux->prox = novo;
+
+	} 
+
+
+
+	novo = criaListaadj(verticeInicial,p);
+	
+	if(grafo->adj[verticeFinal].cabeca == NULL){  // lista vazia 
+		novo->prox = grafo->adj[verticeFinal].cabeca; 
+		grafo->adj[verticeFinal].cabeca=novo;
+
+	}else if(novo->vertice < grafo->adj[verticeFinal].cabeca->vertice){  // novo é o menor item da lista
+		novo->prox = grafo->adj[verticeFinal].cabeca;
+		grafo->adj[verticeFinal].cabeca = novo;
+
+	}else{  //novo esta no meio ou no final da lista
+
+		ADJACENCIA *aux = grafo->adj[verticeFinal].cabeca;
+
+		while(aux->prox != NULL && novo->vertice > aux->prox->vertice) aux = aux->prox;
+		
+		novo->prox = aux->prox;
+		aux->prox = novo;
+
+	}
+
+	grafo->arestas++;
 
 	return;
 }
@@ -368,7 +407,7 @@ void buscaProfundidade(GRAFO *grafo, int ini, int *visitado, int cont){
     while(prox != NULL){ //Percorrendo as arestas do vertice ''ini''
 
         if(visitado[prox->vertice] == 0){ // se nao visitado
-            printf("%d -> ", prox->vertice);
+            printf("-> %d ", prox->vertice);
             buscaProfundidade(grafo,prox->vertice,visitado,cont+1);
 
         }
@@ -377,11 +416,15 @@ void buscaProfundidade(GRAFO *grafo, int ini, int *visitado, int cont){
 }
 
 void preparaBuscaProfundidade(GRAFO *grafo, int ini){
+
+	for(int i = 0; i < grafo->vertices; i ++){
+		
+	}
+
     int* visitado = (int*)calloc(grafo->vertices , sizeof(int));
     int i, cont = 1;
-    printf("%d -> ", ini);
+	printf("\nSequencia de vertices visitados na Busca em Profundidade\n %d ",ini);
     buscaProfundidade(grafo,ini, visitado,cont);
-    printf("\n");
-    for(i=0; i < grafo->vertices; i++)
-        printf("%d -> %d\n",i, visitado[i]);
+    // for(i=0; i < grafo->vertices; i++)
+    //     printf("%d -> %d\n",i, visitado[i]);
 }

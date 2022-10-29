@@ -6,6 +6,7 @@ typedef struct adjacencia {
     int vertice; // vertice de destino 
     float peso; // peso associado a aresta que leva ao vertice de destino
     struct adjacencia *prox; // O proximo elemento da lista de adjacencias
+    int visitado;
 }ADJACENCIA;
 
 typedef struct vertice {
@@ -49,6 +50,6 @@ float centralidadeProximidade(GRAFO *grafo, int vertice);
 
 void Caminho(GRAFO *grafo, int vertice);
 
-void buscaProfundidade(GRAFO *grafo, int ini, int *visitado, int cont);
+void buscaProfundidade(GRAFO*grafo, int ini, int *visitado, int cont);
 
 void preparaBuscaProfundidade(GRAFO *grafo, int ini);
