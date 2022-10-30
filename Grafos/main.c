@@ -119,9 +119,9 @@ int main(){
          }
          else
          {
-         printf("\nDigite qual vertice vc quer saber o excentricidade :");
+         printf("\nDigite qual vertice vc quer saber a excentricidade :");
          scanf("%d",&v);
-           if (v<0 || v > ordem_grafo(grafo)-1)
+           if (v<0 || v > (ordem_grafo(grafo)-1))
            {
              printf("\n\nNao tem esse vertice no grafo!!!\n\n");
            }
@@ -140,7 +140,9 @@ int main(){
          else
          {
             printf("\n\n");
-            printf("Raio do grafo:%2.f\n",raio_grafo(grafo));
+            if(raio_grafo(grafo) != -0.1234567){
+              printf("Raio do grafo:%2.f\n",raio_grafo(grafo));
+            }
          }
          printf("\n\n");
         break;

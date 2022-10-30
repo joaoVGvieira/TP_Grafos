@@ -183,6 +183,7 @@ float execetridade_grafo(GRAFO *grafo, int vertice){
 
 	float float_max = FLT_MAX;
 
+	//Inicializa os vetores e variaveis
 	int verticesCount = grafo->vertices;
 	int edgesCount = grafo->arestas;
 	float* distance = (float*)malloc(sizeof(float) * verticesCount);
@@ -194,7 +195,7 @@ float execetridade_grafo(GRAFO *grafo, int vertice){
 
 	distance[vertice] = 0;
 
-
+	//Laco principal que calcula todas as distancias
 	for(int i = 1; i <= verticesCount; i ++){
 		for(int j = 0; j < verticesCount; j++){
 			ADJACENCIA* prox = (*grafo).adj[j].cabeca;
@@ -210,28 +211,30 @@ float execetridade_grafo(GRAFO *grafo, int vertice){
 			}
 		}
 	}
+	//verifica se ha ciclo de aresta negativa
 	for (int i = 0; i < grafo->vertices; i++){
 		ADJACENCIA* prox = (*grafo).adj[i].cabeca;
 		int u = i;
 		int v = prox->vertice;
 		float weight = prox->peso;
 		if (distance[u] == float_max || distance[u] + weight < distance[v]){
-			printf("\nEste gráfico contém um ciclo de aresta negativa\n");
-			return 0.1;
+			printf("\nEste grafico contem um ciclo de aresta negativa\n");
+			return -0.1234567;
 
 		}
 				 		
 	}
 
 	float maior_distancia = distance[0];
-	
+
+
+	//Pega a maior distancia para todos os vertices do grafo(excentricidade)
 	for (int i = 1; i < grafo->vertices; i++){
 		if(distance[i] > maior_distancia){
 			maior_distancia = distance[i];	
 		}
 	}
-	
-	//printf("\nA soma da maior distancia %.2f\n", maior_distancia);
+
 	return maior_distancia;
 }
 
@@ -242,10 +245,12 @@ float raio_grafo(GRAFO *grafo){
 	for(int i = 0; i < grafo->vertices; i++){
 		if(i == 0){
 			raio = execetridade_grafo(grafo, i);
+			if(raio = -0.1234567) return -0.1234567;
 			vertice = 0;
 		}
 		if(execetridade_grafo(grafo, i) < raio){
 			raio = execetridade_grafo(grafo, i);
+			if(raio = -0.1234567) return -0.1234567;
 			vertice = i;
 		}
 	}
@@ -285,6 +290,7 @@ float centralidadeProximidade(GRAFO *grafo, int vertice){
 
 	float float_max = FLT_MAX;
 
+	//Inicializa vetores e variaveis
 	int verticesCount = grafo->vertices;
 	int edgesCount = grafo->arestas;
 	float* distance = (float*)malloc(sizeof(float) * verticesCount);
@@ -292,12 +298,11 @@ float centralidadeProximidade(GRAFO *grafo, int vertice){
 
 	for (int i = 0; i < verticesCount; i++){
 		distance[i] = float_max;
-		// verticePercorrido[i] = 0;
 	}
 
 	distance[vertice] = 0;
 
-
+	//Laco principal verifica as distancias
 	for(int i = 1; i <= verticesCount; i ++){
 		for(int j = 0; j < verticesCount; j++){
 			ADJACENCIA* prox = (*grafo).adj[j].cabeca;
@@ -308,10 +313,7 @@ float centralidadeProximidade(GRAFO *grafo, int vertice){
 				float weight = prox->peso;
 
 				if (distance[u] != float_max && distance[u] + weight < distance[v])
-					distance[v] = distance[u] + weight;
-					// verticePercorrido[u] = v;
-
-				
+					distance[v] = distance[u] + weight;		
 
 				prox = prox->prox;
 			}
@@ -320,10 +322,11 @@ float centralidadeProximidade(GRAFO *grafo, int vertice){
 
 	float soma = 0;
 	
+	//Soma as distancias
 	for (int i = 0; i < grafo->vertices; i++){
 		soma += distance[i];
 	}
-	
+	//Retorna a centralicade efetuando a conta necessaria
 	return (verticesCount-1)/soma;
 }
 
@@ -350,8 +353,11 @@ void preparaBuscaProfundidade(GRAFO *grafo, int ini){
     int* visitadoo = (int*)calloc(grafo->vertices , sizeof(int));
     int i, cont = 1;
     printf("\nSequencia de vertices visitados na Busca em Profundidade\n %d ",ini);
+
     buscaProfundidade(grafo,ini, visitadoo,cont);
 	printf("\n");
+
+	//Verifica quais arestas nao foram visitadas
     for(int j = 0; j < grafo->vertices; j++){
             ADJACENCIA* prox = (*grafo).adj[j].cabeca;
             while(prox != NULL){
@@ -368,6 +374,7 @@ void preparaBuscaProfundidade(GRAFO *grafo, int ini){
 float procuraMenorDistancia(GRAFO *grafo, int vertice){
     float float_max = FLT_MAX;
 	
+	//Inicializa vetores e variaveis
 	int verticesCount = grafo->vertices;
 	int edgesCount = grafo->arestas;
 	float* distance = (float*)malloc(sizeof(float) * verticesCount);
@@ -378,9 +385,12 @@ float procuraMenorDistancia(GRAFO *grafo, int vertice){
 
 	}
 	
+	
 	distance[vertice] = 0;
 	int vets[vertice];
 	int cont=0;
+
+	//Laco principal para calcular as distancias
 	for(int i = 1; i <= verticesCount; i ++){
 		for(int j = 0; j < verticesCount; j++){
 			ADJACENCIA* prox = (*grafo).adj[j].cabeca;
@@ -391,7 +401,6 @@ float procuraMenorDistancia(GRAFO *grafo, int vertice){
 				float weight = prox->peso;
 
 				if (distance[u] != float_max && distance[u] + weight < distance[v]){
-					
 					distance[v] = distance[u] + weight;
 				}
 				prox = prox->prox;
@@ -399,6 +408,8 @@ float procuraMenorDistancia(GRAFO *grafo, int vertice){
 		}
 	}
 	float menor= distance[0];
+
+	//Procura menor distancia
 	for (int i = verticesCount; i >0; i--){
 		if(distance[i] < menor){
 			menor = distance[i];	
@@ -409,7 +420,9 @@ float procuraMenorDistancia(GRAFO *grafo, int vertice){
     return menor;
 }
 
+//Funcao auxiliar da Dijkstra
 void relaxa(GRAFO *grafo, float *distancia, int *antecessor, int verticeOrigem, int verticeDestino){
+
     ADJACENCIA *aux = grafo->adj[verticeOrigem].cabeca;
 
     while(aux->vertice != verticeDestino && aux) aux = aux->prox;
@@ -423,11 +436,13 @@ void relaxa(GRAFO *grafo, float *distancia, int *antecessor, int verticeOrigem, 
     return;
 }
 
+//Funcao auxiliar da Dijkstra
 int existeAberto(GRAFO *grafo, int *aberto){
     for(int i = 0; i< grafo->vertices; i++) if(aberto[i]) return(1);
     return(0);  
 }
 
+//Funcao auxiliar da Dijkstra
 int MenorDistancia(GRAFO *grafo, int *aberto, float *distancia){
     int i;
     for(i = 0; grafo->vertices; i++) if(aberto[i]) break;
@@ -460,10 +475,12 @@ void Dijkstra(GRAFO *grafo, int verticeOrigem, int verticeDestino){
 			}
 	}
 
+	//Prepara vetores
     float *distancia = (float*)malloc(grafo->vertices * sizeof(float));
     int *antecessor = (int*)malloc(grafo->vertices * sizeof(int));
     int *aberto = (int*)malloc(grafo->vertices * sizeof(int));
 
+	//Inicializa os vetores
     for(int i = 0; i < grafo->vertices; i++){
         distancia[i] = INT_MAX/2;
         antecessor[i] = -1;
@@ -471,8 +488,8 @@ void Dijkstra(GRAFO *grafo, int verticeOrigem, int verticeDestino){
     } 
     distancia[verticeOrigem] = 0;
 
-    //Comeca algoritmo dijkstra
-
+    
+	//Comeca algoritmo dijkstra
     while(existeAberto(grafo, aberto)){
         int u = MenorDistancia(grafo, aberto, distancia);
         aberto[u] = 0;
@@ -486,6 +503,7 @@ void Dijkstra(GRAFO *grafo, int verticeOrigem, int verticeDestino){
 	int vertice = verticeDestino;
 	printf("\n");
 
+	//Printa o menor caminho ate o vertice de destino
 	while(vertice != verticeOrigem){
 		printf("%d <- ", vertice);
 		vertice = antecessor[vertice];
