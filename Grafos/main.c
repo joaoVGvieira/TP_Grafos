@@ -6,7 +6,7 @@
 int main(){
     FILE *fp;
     int opc;
-     int v;
+    int v, verticeDestino;
     int quant_vertice;
     int a1,a2;
     float peso, menor_excentricidade;
@@ -215,15 +215,17 @@ int main(){
          }
          else
          {
-          printf("\nDigite qual vertice vc quer saber o caminho :");
+          printf("\nVertice de origem: ");
           scanf("%d",&v);
+          printf("Vertice de destino: ");
+          scanf("%d",&verticeDestino);
            if (v<0 || v > ordem_grafo(grafo)-1)
            {
              printf("\n\nNao tem esse vertice no grafo!!!\n\n");
            }
            else
            {
-              Dijkstra(grafo,v);
+              Dijkstra(grafo,v,verticeDestino);
            }
            printf("\n");
          }

@@ -63,4 +63,4 @@ int existeAberto(GRAFO *grafo, int *aberto);
 
 int MenorDistancia(GRAFO *grafo, int *aberto, float *distancia);
 
-void Dijkstra(GRAFO *grafo, int verticeOrigem);
+void Dijkstra(GRAFO *grafo, int verticeOrigem, int verticeDestino);

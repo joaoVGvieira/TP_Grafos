@@ -443,7 +443,22 @@ int MenorDistancia(GRAFO *grafo, int *aberto, float *distancia){
 
 }
 
-void Dijkstra(GRAFO *grafo, int verticeOrigem){
+void Dijkstra(GRAFO *grafo, int verticeOrigem, int verticeDestino){
+
+	//Condicional que verifica se o grafo possui pesos negativos
+
+	for(int j = 0; j < grafo->vertices; j++){
+			ADJACENCIA* prox = (*grafo).adj[j].cabeca;
+			while(prox != NULL){
+
+				if(prox->peso < 0){
+					printf("\nO grafo possui peso negativo, nao e possivel calcular o caminho minimo!\n");
+					return;
+				}
+
+				prox = prox->prox;
+			}
+	}
 
     float *distancia = (float*)malloc(grafo->vertices * sizeof(float));
     int *antecessor = (int*)malloc(grafo->vertices * sizeof(int));
@@ -468,8 +483,13 @@ void Dijkstra(GRAFO *grafo, int verticeOrigem){
         }
     }
 
-    for(int i = 0; i < grafo->vertices; i++){
-        printf("\n antecessor[%d] = %d", i, antecessor[i]);
-    }
+	int vertice = verticeDestino;
+	printf("\n");
 
+	while(vertice != verticeOrigem){
+		printf("%d <- ", vertice);
+		vertice = antecessor[vertice];
+	}
+	printf("%d",verticeOrigem);
+	
 }
