@@ -278,6 +278,54 @@ float diametro_grafo(GRAFO *grafo){
 
 void centro_grafo(GRAFO *grafo){
 
+	float float_max = FLT_MAX;
+
+	//Inicializa os vetores e variaveis
+	int verticesCount = grafo->vertices;
+	int edgesCount = grafo->arestas;
+	float* distance = (float*)malloc(sizeof(float) * verticesCount);
+	int* verticePercorrido = (int*)malloc(sizeof(int) * verticesCount);
+
+	for (int i = 0; i < verticesCount; i++){
+		distance[i] = float_max;
+	}
+	int vertice =0;
+	distance[vertice] = 0;
+
+	//Laco principal que calcula todas as distancias
+	for(int i = 1; i <= verticesCount; i ++){
+		for(int j = 0; j < verticesCount; j++){
+			ADJACENCIA* prox = (*grafo).adj[j].cabeca;
+			while(prox != NULL){
+
+				int u = j;
+				int v = prox->vertice;
+				float weight = prox->peso;
+
+				if (distance[u] != float_max && distance[u] + weight < distance[v])
+					distance[v] = distance[u] + weight;
+				prox = prox->prox;
+			}
+		}
+	}
+
+	//verifica se ha ciclo de aresta negativa
+	for (int i = 0; i < grafo->vertices; i++){
+		ADJACENCIA* prox = (*grafo).adj[i].cabeca;
+		int u = i;
+		int v = prox->vertice;
+		float weight = prox->peso;
+		if (distance[u] != float_max && distance[u] + weight < distance[v]){
+			printf("\nEste grafo contem um ciclo de aresta negativa\n");
+			return;
+
+		}
+				 		
+	}
+
+
+
+
 	if(execetridade_grafo(grafo, 0) == 0.0125){
 		printf("\nEste grafo contem um ciclo de aresta negativa\n");
 		 return;
