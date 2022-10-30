@@ -95,10 +95,10 @@ void imprime(GRAFO *grafo){
 	printf("Vertices: %d. Arestas: %d. \n",grafo->vertices,grafo->arestas); //imprime numero de vertices e arestas
 	int i;
 	for(i=0; i< grafo->vertices; i++){
-		printf("%d: ",i+1); //imprimir em qual aresta esta
+		printf("%d: ",i); //imprimir em qual aresta esta
 		ADJACENCIA *ad = grafo->adj[i].cabeca; //chamo a cebeça da lista de adjacencia desta aresta
 			while(ad){ //enquanto as adjacencias nao forem nula
-				printf("%d(%.2f) ",ad->vertice+1,ad->peso); //imprimir a adjacencia e o peso
+				printf("%d(%.2f) ",ad->vertice,ad->peso); //imprimir a adjacencia e o peso
 				ad=ad->prox; //vai para a proxima adjacencia
 			}
 			
