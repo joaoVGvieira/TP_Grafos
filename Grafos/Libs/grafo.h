@@ -55,7 +55,7 @@ void buscaProfundidade(GRAFO*grafo, int ini, int *visitado, int cont);
 
 void preparaBuscaProfundidade(GRAFO *grafo, int ini);
 
-float procuraMenorDistancia(GRAFO *grafo, int vertice);
+float procuraMenorDistancia(GRAFO *grafo, int vertice, int verticeDestino);
 
 void relaxa(GRAFO *grafo, float *distancia, int *antecessor, int verticeOrigem, int verticeDestino);
 

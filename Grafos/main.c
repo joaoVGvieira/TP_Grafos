@@ -177,7 +177,7 @@ int main(){
          }
          else
          {
-          printf("\nDigite qual vertice vc quer saber a profudidade :");
+          printf("\nDigite vertice de origem da busca em profudidade :");
           scanf("%d",&v);
            if (v<0 || v > ordem_grafo(grafo)-1)
            {
@@ -197,15 +197,17 @@ int main(){
          }
          else
          {
-          printf("\nDigite qual vertice vc quer saber a distancia :");
+          printf("\nVertice de Origem: ");
           scanf("%d",&v);
+          printf("Vertice de Destino: ");
+          scanf("%d",&verticeDestino);
            if (v<0 || v > ordem_grafo(grafo)-1)
            {
              printf("\n\nNao tem esse vertice no grafo!!!\n\n");
            }
            else
            {
-              procuraMenorDistancia(grafo,v);
+              printf("\nMenor distancia de %d -> %d = %f", v, verticeDestino, procuraMenorDistancia(grafo,v,verticeDestino));
            }
            printf("\n");
          }

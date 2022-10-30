@@ -218,7 +218,7 @@ float execetridade_grafo(GRAFO *grafo, int vertice){
 		int v = prox->vertice;
 		float weight = prox->peso;
 		if (distance[u] == float_max || distance[u] + weight < distance[v]){
-			printf("\nEste grafico contem um ciclo de aresta negativa\n");
+			printf("\nEste grafo contem um ciclo de aresta negativa\n");
 			return -0.1234567;
 
 		}
@@ -371,7 +371,7 @@ void preparaBuscaProfundidade(GRAFO *grafo, int ini){
 }
 }
 
-float procuraMenorDistancia(GRAFO *grafo, int vertice){
+float procuraMenorDistancia(GRAFO *grafo, int vertice, int verticeDestino){
     float float_max = FLT_MAX;
 	
 	//Inicializa vetores e variaveis
@@ -407,17 +407,8 @@ float procuraMenorDistancia(GRAFO *grafo, int vertice){
 			}
 		}
 	}
-	float menor= distance[0];
 
-	//Procura menor distancia
-	for (int i = verticesCount; i >0; i--){
-		if(distance[i] < menor){
-			menor = distance[i];	
-		}
-		printf("%f\n",distance[i]);
-	}
-	
-    return menor;
+    return distance[verticeDestino];
 }
 
 //Funcao auxiliar da Dijkstra
