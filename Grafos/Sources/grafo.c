@@ -211,22 +211,24 @@ float execetridade_grafo(GRAFO *grafo, int vertice){
 			}
 		}
 	}
+	for(int i = 0; i < grafo->vertices; i++){
+		printf("\nDistance[%d] = %f", i, distance[i]);
+	}
 	//verifica se ha ciclo de aresta negativa
 	for (int i = 0; i < grafo->vertices; i++){
 		ADJACENCIA* prox = (*grafo).adj[i].cabeca;
 		int u = i;
 		int v = prox->vertice;
 		float weight = prox->peso;
-		if (distance[u] == float_max || distance[u] + weight < distance[v]){
+		if (distance[u] != float_max && distance[u] + weight < distance[v]){
 			printf("\nEste grafo contem um ciclo de aresta negativa\n");
-			return -0.1234567;
+			return 0;
 
 		}
 				 		
 	}
 
 	float maior_distancia = distance[0];
-
 
 	//Pega a maior distancia para todos os vertices do grafo(excentricidade)
 	for (int i = 1; i < grafo->vertices; i++){
@@ -242,15 +244,14 @@ float raio_grafo(GRAFO *grafo){
 	float raio;
 	int vertice;
 
+
 	for(int i = 0; i < grafo->vertices; i++){
 		if(i == 0){
 			raio = execetridade_grafo(grafo, i);
-			if(raio = -0.1234567) return -0.1234567;
 			vertice = 0;
 		}
 		if(execetridade_grafo(grafo, i) < raio){
 			raio = execetridade_grafo(grafo, i);
-			if(raio = -0.1234567) return -0.1234567;
 			vertice = i;
 		}
 	}
@@ -261,6 +262,8 @@ float raio_grafo(GRAFO *grafo){
 float diametro_grafo(GRAFO *grafo){
 	float diametro;
 	int vertice;
+	
+
 
 	for(int i = 0; i < grafo->vertices; i++){
 		if(i == 0){
@@ -277,6 +280,11 @@ float diametro_grafo(GRAFO *grafo){
 }
 
 void centro_grafo(GRAFO *grafo){
+	float diametro;
+
+	diametro = execetridade_grafo(grafo, 0);
+	if(diametro == -0.1234567) return ;
+
 	printf("\nVertices que fazer parte do centro: ");
     for(int i = 0; i < grafo->vertices; i++){
       	if(execetridade_grafo(grafo, i) == raio_grafo(grafo)){

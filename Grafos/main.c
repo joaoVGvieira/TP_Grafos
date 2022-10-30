@@ -139,10 +139,9 @@ int main(){
          }
          else
          {
-            printf("\n\n");
-            if(raio_grafo(grafo) != -0.1234567){
-              printf("Raio do grafo:%2.f\n",raio_grafo(grafo));
-            }
+            
+          printf("Raio do grafo:%2.f\n",raio_grafo(grafo));
+            
          }
          printf("\n\n");
         break;
