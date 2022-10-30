@@ -258,10 +258,9 @@ float raio_grafo(GRAFO *grafo){
 }
 
 float diametro_grafo(GRAFO *grafo){
+
 	float diametro;
 	int vertice;
-	
-
 
 	for(int i = 0; i < grafo->vertices; i++){
 		if(i == 0){
@@ -278,10 +277,11 @@ float diametro_grafo(GRAFO *grafo){
 }
 
 void centro_grafo(GRAFO *grafo){
-	float diametro;
 
-	diametro = execetridade_grafo(grafo, 0);
-	if(diametro == -0.1234567) return ;
+	if(execetridade_grafo(grafo, 0) == 0.0125){
+		printf("\nEste grafo contem um ciclo de aresta negativa\n");
+		 return;
+	}
 
 	printf("\nVertices que fazer parte do centro: ");
     for(int i = 0; i < grafo->vertices; i++){
