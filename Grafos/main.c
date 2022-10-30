@@ -127,8 +127,10 @@ int main(){
            }
            else
            {
-              execetridade_grafo(grafo,v);
-           }
+              if (!execetridade_grafo(grafo,v)==0.0125)
+              {
+                    printf("\nExcentricidade do grafo:%.2f\n",execetridade_grafo(grafo,v));
+              }              }    
            printf("\n");
          }
         break;
@@ -139,9 +141,10 @@ int main(){
          }
          else
          {
-            
-          printf("Raio do grafo:%2.f\n",raio_grafo(grafo));
-            
+            if (!raio_grafo(grafo)==0.0125)
+              {
+                   printf("\nRaio do grafo:%.2f\n",raio_grafo(grafo));
+              }  
          }
          printf("\n\n");
         break;
@@ -152,8 +155,12 @@ int main(){
          }
          else
          {
-            printf("\n\n");
-            printf("diamentro do grafo:%2.f\n",diametro_grafo(grafo));
+          if (!diametro_grafo(grafo)==0.0125)
+              {
+                      printf("\n\n");
+                      printf("diamentro do grafo:%.2f\n",diametro_grafo(grafo));
+              } 
+         
          }
          printf("\n\n");
         break;
@@ -164,8 +171,10 @@ int main(){
          }
          else
          {
-            printf("\n");
-            centro_grafo(grafo);
+        
+                  printf("\n");
+                  centro_grafo(grafo);
+
          }
          printf("\n\n");
         break;
@@ -206,7 +215,10 @@ int main(){
            }
            else
            {
-              printf("\nMenor distancia de %d -> %d = %f", v, verticeDestino, procuraMenorDistancia(grafo,v,verticeDestino));
+              if (!centralidadeProximidade(grafo,v)==0.0125)
+              {
+                printf("\nMenor distancia de %d -> %d = %.2f", v, verticeDestino, procuraMenorDistancia(grafo,v,verticeDestino));
+              }   
            }
            printf("\n");
          }
@@ -248,7 +260,10 @@ int main(){
            }
            else
            {
-              printf("centralidade do vertice %d do grafo:%2.f\n",v,centralidadeProximidade(grafo,v));
+              if (!centralidadeProximidade(grafo,v)==0.0125)
+              {
+                printf("\ncentralidade do vertice %d do grafo:%.2f\n",v,centralidadeProximidade(grafo,v)); 
+              }              
            }
            printf("\n");
          }

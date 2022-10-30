@@ -211,9 +211,7 @@ float execetridade_grafo(GRAFO *grafo, int vertice){
 			}
 		}
 	}
-	for(int i = 0; i < grafo->vertices; i++){
-		printf("\nDistance[%d] = %f", i, distance[i]);
-	}
+
 	//verifica se ha ciclo de aresta negativa
 	for (int i = 0; i < grafo->vertices; i++){
 		ADJACENCIA* prox = (*grafo).adj[i].cabeca;
@@ -222,7 +220,7 @@ float execetridade_grafo(GRAFO *grafo, int vertice){
 		float weight = prox->peso;
 		if (distance[u] != float_max && distance[u] + weight < distance[v]){
 			printf("\nEste grafo contem um ciclo de aresta negativa\n");
-			return 0;
+			return 0.0125;
 
 		}
 				 		
@@ -335,6 +333,20 @@ float centralidadeProximidade(GRAFO *grafo, int vertice){
 		soma += distance[i];
 	}
 	//Retorna a centralicade efetuando a conta necessaria
+
+	for (int i = 0; i < grafo->vertices; i++){
+		ADJACENCIA* prox = (*grafo).adj[i].cabeca;
+		int u = i;
+		int v = prox->vertice;
+		float weight = prox->peso;
+		if (distance[u] != float_max && distance[u] + weight < distance[v]){
+			printf("\nEste grafo contem um ciclo de aresta negativa\n");
+			return 0.0125;
+
+		}
+				 		
+	}
+
 	return (verticesCount-1)/soma;
 }
 
@@ -414,6 +426,19 @@ float procuraMenorDistancia(GRAFO *grafo, int vertice, int verticeDestino){
 				prox = prox->prox;
 			}
 		}
+	}
+	
+	for (int i = 0; i < grafo->vertices; i++){
+		ADJACENCIA* prox = (*grafo).adj[i].cabeca;
+		int u = i;
+		int v = prox->vertice;
+		float weight = prox->peso;
+		if (distance[u] != float_max && distance[u] + weight < distance[v]){
+			printf("\nEste grafo contem um ciclo de aresta negativa\n");
+			return 0.0125;
+
+		}
+				 		
 	}
 
     return distance[verticeDestino];

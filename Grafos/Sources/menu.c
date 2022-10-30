@@ -7,7 +7,7 @@ void menu_principal(){
     printf("3.  Retornar o Tamanho do Grafo\n");
     printf("4.  Retornar vizinhos de um vertice\n");
     printf("5.  Retornar a sequencia de graus de um grafo\n");
-    printf("6.  Retornar a grau de um vertice\n");
+    printf("6.  Retornar o grau de um vertice\n");
     printf("7.  Retornar a excentricidade de um vetrice\n");
     printf("8.  Retornar o raio do grafo\n");
     printf("9.  Retornar o diametro do grafo\n");
