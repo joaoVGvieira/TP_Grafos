@@ -127,10 +127,8 @@ int main(){
            }
            else
            {
-              if (!execetridade_grafo(grafo,v)==0.0125)
-              {
-                    printf("\nExcentricidade do grafo:%.2f\n",execetridade_grafo(grafo,v));
-              }              }    
+                printf("\nExcentricidade do grafo:%.2f\n",execetridade_grafo(grafo,v));         
+              }   
            printf("\n");
          }
         break;
@@ -141,10 +139,9 @@ int main(){
          }
          else
          {
-            if (!raio_grafo(grafo)==0.0125)
-              {
-                   printf("\nRaio do grafo:%.2f\n",raio_grafo(grafo));
-              }  
+            
+            printf("\nRaio do grafo:%.2f\n",raio_grafo(grafo));
+              
          }
          printf("\n\n");
         break;
@@ -155,12 +152,10 @@ int main(){
          }
          else
          {
-          if (!diametro_grafo(grafo)==0.0125)
-              {
-                      printf("\n\n");
-                      printf("diamentro do grafo:%.2f\n",diametro_grafo(grafo));
-              } 
          
+              printf("\n\n");
+              printf("diamentro do grafo:%.2f\n",diametro_grafo(grafo));
+              
          }
          printf("\n\n");
         break;

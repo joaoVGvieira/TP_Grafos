@@ -1,6 +1,7 @@
 #include "../Libs/grafo.h"
 #include <math.h>
 #include <float.h>
+int N=0;
 
 #define INT_MAX   (2147483647)
 
@@ -219,9 +220,11 @@ float execetridade_grafo(GRAFO *grafo, int vertice){
 		int v = prox->vertice;
 		float weight = prox->peso;
 		if (distance[u] != float_max && distance[u] + weight < distance[v]){
-			printf("\nEste grafo contem um ciclo de aresta negativa\n");
-			return 0.0125;
-
+			if (N==0)
+			{
+				printf("\nEste grafo contem um ciclo de aresta negativa\n");
+				N++;
+			}
 		}
 				 		
 	}
@@ -241,7 +244,7 @@ float execetridade_grafo(GRAFO *grafo, int vertice){
 float raio_grafo(GRAFO *grafo){
 	float raio;
 	int vertice;
-
+	N=0;
 
 	for(int i = 0; i < grafo->vertices; i++){
 		if(i == 0){
@@ -261,7 +264,7 @@ float diametro_grafo(GRAFO *grafo){
 
 	float diametro;
 	int vertice;
-
+	N = 0;
 	for(int i = 0; i < grafo->vertices; i++){
 		if(i == 0){
 			diametro = execetridade_grafo(grafo, i);
