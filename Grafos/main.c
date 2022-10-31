@@ -135,7 +135,7 @@ int main(){
               }
               else
               {
-                  printf("diamentro do grafo:%.2f\n",execetridade_grafo(grafo,v));
+                  printf("execentricidade do vertice %d:%.2f\n",v,execetridade_grafo(grafo,v));
               }  
 
                        
@@ -157,7 +157,7 @@ int main(){
               }
               else
               {
-                  printf("diamentro do grafo:%.2f\n",raio_grafo(grafo));
+                  printf("raio do grafo:%.2f\n",raio_grafo(grafo));
               }   
          }
          printf("\n\n");
