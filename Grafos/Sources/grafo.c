@@ -2,7 +2,8 @@
 #include <math.h>
 #include <float.h>
 int N=0;
-
+#define TRUE 1;
+#define FALSE 0;
 #define INT_MAX   (2147483647)
 
 //funçao para criar um GRAFO
@@ -401,6 +402,9 @@ float centralidadeProximidade(GRAFO *grafo, int vertice){
 	return (verticesCount-1)/soma;
 }
 
+
+
+
 void buscaProfundidade(GRAFO *grafo, int ini, int *visitado, int cont){
     int i;
     visitado[ini] = cont; //Prenchendo os vertices visitados com o numero referente a ordem em que foram visitados
@@ -439,7 +443,41 @@ void preparaBuscaProfundidade(GRAFO *grafo, int ini){
 				prox = prox->prox;
             }
 
+	}
 }
+
+int preparasetemCiclo(GRAFO *grafo, int ini){
+
+    int* visitadoo = (int*)calloc(grafo->vertices , sizeof(int));
+    int i, cont = 1;
+    temCiclo(grafo,ini, visitadoo,cont);	
+
+	 for(int j = 0; j < grafo->vertices; j++){
+            ADJACENCIA* prox = (*grafo).adj[j].cabeca;
+            while(prox != NULL){
+                if(prox->vertice == 1){
+                   //return FALSE;
+                }
+				prox = prox->prox;
+            }
+
+	}
+	//return TRUE;
+}
+
+
+void temCiclo(GRAFO *grafo, int ini, int *visitado, int cont){
+    int i;
+    visitado[ini] = cont;
+	printf("Visitou %d\n", ini);
+    ADJACENCIA* prox = (*grafo).adj[ini].cabeca;
+
+    while(prox != NULL){ //Percorrendo as arestas do vertice ''ini''
+        if(visitado[prox->vertice] == 0){ // se nao visitado
+            temCiclo(grafo,prox->vertice,visitado,cont);
+        }	
+        prox = prox-> prox;
+    }
 }
 
 float procuraMenorDistancia(GRAFO *grafo, int vertice, int verticeDestino){
@@ -494,6 +532,9 @@ float procuraMenorDistancia(GRAFO *grafo, int vertice, int verticeDestino){
 
     return distance[verticeDestino];
 }
+
+
+
 
 //Funcao auxiliar da Dijkstra
 void relaxa(GRAFO *grafo, float *distancia, int *antecessor, int verticeOrigem, int verticeDestino){
@@ -586,3 +627,5 @@ void Dijkstra(GRAFO *grafo, int verticeOrigem, int verticeDestino){
 	printf("%d",verticeOrigem);
 	
 }
+
+

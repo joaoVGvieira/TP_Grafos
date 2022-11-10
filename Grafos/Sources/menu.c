@@ -17,5 +17,8 @@ void menu_principal(){
     printf("13. Retornar Caminho de um vertice\n");
     printf("14. Retornar a centralidade de um vertice\n");
     printf("15. Imprime o grafo\n");
+    printf("16. Ver se grafo tem Ciclo\n");
+
     printf("== Digite sua opcao : ");
 }
+

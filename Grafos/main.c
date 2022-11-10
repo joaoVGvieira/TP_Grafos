@@ -299,6 +299,14 @@ int main(){
         case 0:
            printf("\n\nVolte Sempre!!!!\n\n");
         break;
+        case 16:
+            if(preparasetemCiclo(grafo,0)){
+                printf("Tem ciclo\n");
+            }else
+            {
+              printf(" N Tem ciclo!!!\n");
+            }
+          break;
       default:
         printf("\n\nOPCAO INVALIDA!!!\n\n");
         break;
