@@ -449,35 +449,27 @@ void preparaBuscaProfundidade(GRAFO *grafo, int ini){
 int preparasetemCiclo(GRAFO *grafo, int ini){
 
     int* visitadoo = (int*)calloc(grafo->vertices , sizeof(int));
-    int i, cont = 1;
-    temCiclo(grafo,ini, visitadoo,cont);	
+	return temCiclo(grafo,ini, visitadoo);	
 
-	 for(int j = 0; j < grafo->vertices; j++){
-            ADJACENCIA* prox = (*grafo).adj[j].cabeca;
-            while(prox != NULL){
-                if(prox->vertice == 1){
-                   //return FALSE;
-                }
-				prox = prox->prox;
-            }
-
-	}
-	//return TRUE;
 }
 
 
-void temCiclo(GRAFO *grafo, int ini, int *visitado, int cont){
-    int i;
-    visitado[ini] = cont;
+int temCiclo(GRAFO *grafo, int ini, int *visitado){
+	int cycle_found = 0;
+    visitado[ini] = 1;
 	printf("Visitou %d\n", ini);
     ADJACENCIA* prox = (*grafo).adj[ini].cabeca;
-
     while(prox != NULL){ //Percorrendo as arestas do vertice ''ini''
         if(visitado[prox->vertice] == 0){ // se nao visitado
-            temCiclo(grafo,prox->vertice,visitado,cont);
+            temCiclo(grafo,prox->vertice,visitado);
         }	
+		else 
+		{
+			cycle_found = 1;
+		}
         prox = prox-> prox;
     }
+	return cycle_found;
 }
 
 float procuraMenorDistancia(GRAFO *grafo, int vertice, int verticeDestino){
