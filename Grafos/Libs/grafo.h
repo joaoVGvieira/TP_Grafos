@@ -67,5 +67,4 @@ void Dijkstra(GRAFO *grafo, int verticeOrigem, int verticeDestino);
 
 int preparasetemCiclo(GRAFO *grafo, int ini);
 
-int temCiclo(GRAFO *grafo, int ini, int *visitado);
-
+int temCiclo(GRAFO *grafo, int ini, int *visitado, int cont);
