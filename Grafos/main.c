@@ -308,6 +308,7 @@ int main(){
             }
           break;
       default:
+        algPrim(grafo);
         printf("\n\nOPCAO INVALIDA!!!\n\n");
         break;
       }

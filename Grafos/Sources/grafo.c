@@ -1,6 +1,7 @@
 #include "../Libs/grafo.h"
 #include <math.h>
 #include <float.h>
+
 int N=0;
 #define TRUE 1;
 #define FALSE 0;
@@ -621,6 +622,94 @@ void Dijkstra(GRAFO *grafo, int verticeOrigem, int verticeDestino){
 	}
 	printf("%d",verticeOrigem);
 	
+}
+
+bool conjZ(bool *z, int V){
+    /* A função verifica se todos os vertices de G estão em Z.
+     * Retorna true se possui algum vértice que não está em Z.
+     * Retorna false se todos os vértices estão em Z.
+     * */
+    int v;
+    for(v = 0; v < V; v++){
+        if(!z[v]) return true;
+    }
+    return false;
+}
+
+void printArvore(int *ant, float *chave, int V){
+    int i=0; 
+	float custo = 0;
+	FILE *arq;
+	arq = fopen("arvore.txt", "wt");
+	if (arq == NULL) // Se não conseguiu criar
+	{	
+   		printf("Problemas na CRIACAO do arquivo\n");
+   		return;
+	}else{
+		printf("Arvore geradora minima: \n");
+		for(i = 1; i < V; i++){
+			printf("(%d, %d) ",i, ant[i]);
+			custo += chave[i];
+		}
+		printf("\nCusto: %2.f", custo);
+	}	
+}
+int minValor(float chave[], bool z[], int V) {
+    /* A função encontra o vértice com valor mínimo de chave, do conjunto de
+     * vértices que ainda não estão em Z.
+     * */
+    float min = FLT_MAX;
+	int min_index = 0;
+	int v;
+
+    for (v = 0; v < V; v++){
+        if (z[v] == false && chave[v] < min){
+            min = chave[v];
+            min_index = v;
+        }
+    }
+    return min_index;
+}//minValor()
+
+void algPrim(GRAFO *grafo){
+    /* A função constroi e imprime uma árvore geradora minima (AGM)
+     * para um grafo G representado por uma matriz de adjacências
+     * */
+	int qtdV = grafo->vertices;
+    int ant[qtdV]; //Vetor para armazenar a AGM
+    float chave[qtdV]; //Vetor que armazena os custos mínimos da fronteira de cada vértice
+    bool z[qtdV]; //Vetor que armazena os vértices inseridos no conjunto Z
+    int i, j, v;
+
+    for(i = 0; i < qtdV; i++) { //Iniciando vetores
+        z[i] = false;
+        chave[i] = INT_MAX;
+    }
+
+    //O vértice 0 será a raiz da AGM
+    chave[0] = 0;
+    ant[0] = -1;
+
+    //Enquanto existir vértice não inserido em Z
+    while(conjZ(z, qtdV)){
+        int u = minValor(chave, z, grafo->vertices); //Busca o indice com aresta de menor custo na fronteira
+        z[u] = true; //Insere u em Z
+
+        //Atualize o valor da chave e o índice anterior dos vértices adjacentes ao vértice selecionado.
+        //Considere apenas os vértices que ainda não estão incluídos na AGM
+        for(v = 0; v < grafo->vertices; v++){
+			 ADJACENCIA* ad = grafo->adj[u].cabeca;
+            //O grafo[u][v] é diferente de zero apenas para vértices adjacentes de m
+            //z[v] é falso para vértices ainda não incluídos na AGM
+            //Atualize a chave apenas se o grafo[u][v] for menor que chave[v]
+            if(ad->vertice && z[v] == false && ad->peso <= chave[v]){
+                ant[v] = u;
+                chave[v] =ad->peso;
+            }
+        }
+    }
+    //Ao final, imprime a AGM construída
+    printArvore(ant, chave, qtdV);
 }
 
 

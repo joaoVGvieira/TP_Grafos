@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
-
+#include <stdbool.h>
 typedef struct adjacencia {
     int vertice; // vertice de destino 
     float peso; // peso associado a aresta que leva ao vertice de destino
@@ -68,3 +68,11 @@ void Dijkstra(GRAFO *grafo, int verticeOrigem, int verticeDestino);
 int preparasetemCiclo(GRAFO *grafo, int ini);
 
 int temCiclo(GRAFO *grafo, int ini, int *visitado, int cont);
+
+bool conjZ(bool *z, int V);
+
+void algPrim(GRAFO *grafo);
+
+void printArvore(int *ant, float *chave, int V);
+
+int minValor(float chave[], bool z[], int V);
