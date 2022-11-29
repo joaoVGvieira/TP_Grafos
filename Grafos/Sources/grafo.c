@@ -467,12 +467,12 @@ int temCiclo(GRAFO *grafo, int ini, int *visitado, int cont){
             temCiclo(grafo,prox->vertice,visitado,cont+1);
         }else
 		{
-			return FALSE;
+			return TRUE;
 		}
 		
         prox = prox-> prox;
     }
-	return TRUE;
+	return FALSE;
 }
 
 float procuraMenorDistancia(GRAFO *grafo, int vertice, int verticeDestino){
