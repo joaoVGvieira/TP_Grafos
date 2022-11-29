@@ -67,7 +67,7 @@ void Dijkstra(GRAFO *grafo, int verticeOrigem, int verticeDestino);
 
 int preparasetemCiclo(GRAFO *grafo, int ini);
 
-int temCiclo(GRAFO *grafo, int ini, int *visitado, int cont);
+void temCiclo(GRAFO *grafo, int ini, int *visitado, int cont);
 
 bool conjZ(bool *z, int V);
 

@@ -451,29 +451,42 @@ int preparasetemCiclo(GRAFO *grafo, int ini){
 
 	int cont =0;
     int* visitadoo = (int*)calloc(grafo->vertices , sizeof(int));
-	return temCiclo(grafo,ini, visitadoo,cont);	
+	temCiclo(grafo,ini, visitadoo,cont);	
+	  for(int j = 0; j < grafo->vertices; j++){
+            ADJACENCIA* prox = (*grafo).adj[j].cabeca;
+			
+            while(prox != NULL){
+				printf("i= %d vet = %d visited = %d \n",j,prox->vertice,prox->visited);
+                if(prox->visited == 1){
+                   
+
+                }
+				prox = prox->prox;
+            }
+
+	}
+	printf("\nvisitadooo\n ");
+	for (int i = 0; i < grafo->vertices; i++)
+	{
+		printf("%d ",visitadoo[i]);
+	}
+		
 
 }
 
 
-int temCiclo(GRAFO *grafo, int ini, int *visitado, int cont){
+void temCiclo(GRAFO *grafo, int ini, int *visitado, int cont){
     visitado[ini] = cont;
 
     ADJACENCIA* prox = (*grafo).adj[ini].cabeca;
-
     while(prox != NULL){ 
 
         if(visitado[prox->vertice] == 0){ 
             prox->visited = 1;
             temCiclo(grafo,prox->vertice,visitado,cont+1);
-        }else
-		{
-			return FALSE;
-		}
-		
+        }
         prox = prox-> prox;
     }
-	return TRUE;
 }
 
 float procuraMenorDistancia(GRAFO *grafo, int vertice, int verticeDestino){
@@ -598,9 +611,7 @@ void Dijkstra(GRAFO *grafo, int verticeOrigem, int verticeDestino){
         antecessor[i] = -1;
         aberto[i] = 1;
     } 
-    distancia[verticeOrigem] = 0;
-
-    
+    distancia[verticeOrigem] = 0;    
 	//Comeca algoritmo dijkstra
     while(existeAberto(grafo, aberto)){
         int u = MenorDistancia(grafo, aberto, distancia);
@@ -640,20 +651,24 @@ void printArvore(int *ant, float *chave, int V){
     int i=0; 
 	float custo = 0;
 	FILE *arq;
-	arq = fopen("arvore.txt", "wt");
+	arq = fopen("arvore.txt", "w");
 	if (arq == NULL) // Se não conseguiu criar
 	{	
    		printf("Problemas na CRIACAO do arquivo\n");
    		return;
 	}else{
-		printf("Arvore geradora minima: \n");
+		fprintf(arq," == Arvore geradora minima ==  \n");
 		for(i = 1; i < V; i++){
-			printf("(%d, %d) ",i, ant[i]);
+			fprintf(arq,"%d %d %.2f\n",i, ant[i],chave[i]);
+			//printf("%d %d %.2f\n",i, ant[i],chave[i]);
 			custo += chave[i];
 		}
-		printf("\nCusto: %2.f", custo);
-	}	
+		fprintf(arq,"Custo Total: %.2f", custo);
+		fclose(arq);
+	}
+		
 }
+
 int minValor(float chave[], bool z[], int V) {
     /* A função encontra o vértice com valor mínimo de chave, do conjunto de
      * vértices que ainda não estão em Z.
@@ -698,14 +713,19 @@ void algPrim(GRAFO *grafo){
         //Atualize o valor da chave e o índice anterior dos vértices adjacentes ao vértice selecionado.
         //Considere apenas os vértices que ainda não estão incluídos na AGM
         for(v = 0; v < grafo->vertices; v++){
-			 ADJACENCIA* ad = grafo->adj[u].cabeca;
+			 ADJACENCIA* ad = grafo->adj[v].cabeca;
+
             //O grafo[u][v] é diferente de zero apenas para vértices adjacentes de m
             //z[v] é falso para vértices ainda não incluídos na AGM
             //Atualize a chave apenas se o grafo[u][v] for menor que chave[v]
-            if(ad->vertice && z[v] == false && ad->peso <= chave[v]){
+			while (ad->prox != NULL)
+			{
+				if(z[v] == false && ad->peso <= chave[v]){
                 ant[v] = u;
                 chave[v] =ad->peso;
-            }
+                }   
+				ad = ad->prox;   
+			}       
         }
     }
     //Ao final, imprime a AGM construída
