@@ -19,6 +19,7 @@ void menu_principal(){
     printf("15. Imprime o grafo\n");
     printf("16. Ver se grafo tem Ciclo\n");
     printf("17. Arvore geradora minima\n");
+    printf("18. Cobertura de vertices\n");
     printf("== Digite sua opcao : ");
 }
 

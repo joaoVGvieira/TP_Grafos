@@ -444,13 +444,14 @@ float centralidadeProximidade(GRAFO *grafo, int vertice){
 	return (verticesCount-1)/soma;
 }
 
-void preencheVisitado(GRAFO *grafo, int verticeOrigem, int verticeDestino){
+void preencheVisitado(GRAFO *grafo, int verticeDestino, int verticeOrigem){
 
-	ADJACENCIA* prox = (*grafo).adj[verticeDestino].cabeca;
+	ADJACENCIA* prox = (*grafo).adj[verticeOrigem].cabeca;
 	while(prox != NULL){ //Percorrendo as arestas do vertice ''ini''
 
-		if(prox->vertice == verticeOrigem){
+		if(prox->vertice == verticeDestino){
 			prox->visited = 1;
+			return;
 		}
 		prox = prox-> prox;
 	}
@@ -776,5 +777,83 @@ void verificaCiclo(GRAFO *grafo){
 				prox = prox->prox;
             }
 
+	}
+}
+
+void coberturaVertice(GRAFO *grafo){
+
+	int aux, arestasCobertas = 0;
+
+	int* graus = (int*)malloc(grafo->vertices * sizeof(int));
+	int* vertices = (int*)malloc(grafo->vertices * sizeof(int));
+
+	for(int i = 0; i < grafo->vertices; i++){
+		graus[i] = grafo->adj[i].grau;
+		vertices[i] = i;
+	}
+
+	BubbleSort(grafo, graus, vertices);
+
+
+	int cont = 0;
+	ADJACENCIA* verticeVerificado;
+
+	while( arestasCobertas < grafo->arestas ){
+
+		verticeVerificado = (*grafo).adj[vertices[cont]].cabeca;
+		
+		while(verticeVerificado != NULL){
+
+			if(verticeVerificado->visited != 1){
+				verticeVerificado->visited = 1;
+				preencheVisitado(grafo, verticeVerificado->vertice, cont);
+
+				for ( int i = 0; i < grafo->vertices; i ++){
+						if( vertices[i] == verticeVerificado->vertice && graus[i] != -1) {
+						graus[i] -= 1;
+						break;
+					}
+				}
+			}
+
+			verticeVerificado = verticeVerificado->prox;
+		}
+
+		arestasCobertas += graus[cont];
+		graus[cont] = -1;
+		BubbleSort(grafo, graus, vertices);
+
+
+	}
+
+	printf("\nVertices que fazem parte da cobertura de vertices\n");
+
+	for( int i = grafo->vertices-1; i >= 0; i --){
+		if(graus[i] == -1){
+			printf("%d ", vertices[i]);
+		}
+	}
+
+	
+	printf("\n");
+}
+
+void BubbleSort(GRAFO* grafo, int* graus, int* vertices){
+	int aux;
+	for(int i = 1; i < grafo->vertices; i ++){
+		for(int j = 0; j <grafo->vertices -1; j ++){
+
+			if(graus[j] < graus[ j + 1]){
+				aux = graus[j];
+				graus[j] = graus[j+1];
+				graus[j+1] = aux;
+
+				aux = vertices[j];
+				vertices[j] = vertices[j+1];
+				vertices[j+1] = aux;
+				
+			}
+
+		}
 	}
 }

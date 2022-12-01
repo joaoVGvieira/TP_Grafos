@@ -306,6 +306,9 @@ int main(){
           case 17:
              algPrim(grafo);
           break;
+          case 18:
+            coberturaVertice(grafo);
+          break;
       default:
         printf("\n\nOPCAO INVALIDA!!!\n\n");
         break;

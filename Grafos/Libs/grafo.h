@@ -86,3 +86,7 @@ void verificaCiclo(GRAFO *grafo);
 float **alocaMatriz(int v);
 
 void GRAPHInsert(GRAFO *G, int u, int v, float custo);
+
+void coberturaVertice(GRAFO *grafo);
+
+void BubbleSort(GRAFO* grafo, int* graus, int* vertices);
