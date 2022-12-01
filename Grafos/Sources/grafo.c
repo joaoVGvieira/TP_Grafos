@@ -723,6 +723,7 @@ void algPrim(GRAFO *G){
     }
 
     printArvore(ant, chave, qtdV);
+	printf("\nArquivo de Saida Atualizado!!!\n");
 }
 
 

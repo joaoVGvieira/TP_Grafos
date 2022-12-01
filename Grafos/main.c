@@ -298,16 +298,25 @@ int main(){
          }
           break; 
         case 0:
-           printf("\n\nVolte Sempre!!!!\n\n");
+           printf("\n\nPrograma Encerrado...\n\n");
         break;
         case 16:
-            verificaCiclo(grafo);
+              if (fp!=NULL)
+              {
+                 verificaCiclo(grafo);
+              }
           break;
           case 17:
-             algPrim(grafo);
+              if (fp!=NULL)
+              {
+                algPrim(grafo);
+              }
           break;
           case 18:
-            coberturaVertice(grafo);
+             if (fp!=NULL)
+              {
+                coberturaVertice(grafo);
+              }
           break;
       default:
         printf("\n\nOPCAO INVALIDA!!!\n\n");
