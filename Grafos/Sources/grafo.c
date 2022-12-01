@@ -642,7 +642,7 @@ void printArvore(int *ant, float *chave, int V){
 	}else{
 		fprintf(arq," == Arvore geradora minima ==  \n");
 		for(i = 1; i < V; i++){
-			fprintf(arq,"%d %d %.2f\n",i, ant[i],chave[i]);
+			fprintf(arq,"%d %d %.2f\n",ant[i],i,chave[i]);
 			//printf("%d %d %.2f\n",i, ant[i],chave[i]);
 			custo += chave[i];
 		}
@@ -681,13 +681,12 @@ void algPrim(GRAFO *grafo){
 
     for(i = 0; i < qtdV; i++) { //Iniciando vetores
         z[i] = false;
-        chave[i] = INT_MAX;
+        chave[i] = FLT_MAX;
     }
 
     //O vértice 0 será a raiz da AGM
     chave[0] = 0;
-    ant[0] = -1;
-
+    ant[0] = 0;
     //Enquanto existir vértice não inserido em Z
     while(conjZ(z, qtdV)){
         int u = minValor(chave, z, grafo->vertices); //Busca o indice com aresta de menor custo na fronteira
@@ -695,20 +694,19 @@ void algPrim(GRAFO *grafo){
 
         //Atualize o valor da chave e o índice anterior dos vértices adjacentes ao vértice selecionado.
         //Considere apenas os vértices que ainda não estão incluídos na AGM
+		
         for(v = 0; v < grafo->vertices; v++){
-			 ADJACENCIA* ad = grafo->adj[v].cabeca;
-
+			ADJACENCIA* ad = grafo->adj[v].cabeca;
             //O grafo[u][v] é diferente de zero apenas para vértices adjacentes de m
             //z[v] é falso para vértices ainda não incluídos na AGM
             //Atualize a chave apenas se o grafo[u][v] for menor que chave[v]
-			while (ad->prox != NULL)
+			for (ad ; ad!=NULL;ad = ad->prox)
 			{
 				if(z[v] == false && ad->peso <= chave[v]){
-                ant[v] = u;
-                chave[v] =ad->peso;
-                }   
-				ad = ad->prox;   
-			}       
+					ant[v] = u;
+					chave[v] =ad->peso;
+                }  
+			}
         }
     }
     //Ao final, imprime a AGM construída

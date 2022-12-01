@@ -302,8 +302,10 @@ int main(){
         case 16:
             verificaCiclo(grafo);
           break;
+          case 17:
+             algPrim(grafo);
+          break;
       default:
-        algPrim(grafo);
         printf("\n\nOPCAO INVALIDA!!!\n\n");
         break;
       }
