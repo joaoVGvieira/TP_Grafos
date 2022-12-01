@@ -403,19 +403,32 @@ float centralidadeProximidade(GRAFO *grafo, int vertice){
 	return (verticesCount-1)/soma;
 }
 
+void preencheVisitado(GRAFO *grafo, int verticeOrigem, int verticeDestino){
 
+	ADJACENCIA* prox = (*grafo).adj[verticeDestino].cabeca;
+	while(prox != NULL){ //Percorrendo as arestas do vertice ''ini''
+
+		if(prox->vertice == verticeOrigem){
+			prox->visited = 1;
+		}
+
+		prox = prox-> prox;
+	}
+}
 
 
 void buscaProfundidade(GRAFO *grafo, int ini, int *visitado, int cont){
     int i;
     visitado[ini] = cont; //Prenchendo os vertices visitados com o numero referente a ordem em que foram visitados
-
+	// ini vertice origem
+	// prox->vertice vertice destino
     ADJACENCIA* prox = (*grafo).adj[ini].cabeca;
 
     while(prox != NULL){ //Percorrendo as arestas do vertice ''ini''
 
         if(visitado[prox->vertice] == 0){ // se nao visitado
             prox->visited = 1;
+			preencheVisitado(grafo,  ini, prox->vertice);
             printf("-> %d ", prox->vertice);
             buscaProfundidade(grafo,prox->vertice,visitado,cont+1);
 
