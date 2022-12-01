@@ -36,6 +36,7 @@ int main(){
          GRAFO *grafo = criaGrafo(quant_vertice);
           while (!feof(fp)){
              fscanf (fp,"%d %d %f\n", &a1,&a2,&peso);
+             GRAPHInsert(grafo,a1,a2,peso);
              criaAresta(grafo,a1,a2,peso);
           }
           exist=1;   

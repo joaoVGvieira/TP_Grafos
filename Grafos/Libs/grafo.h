@@ -18,6 +18,7 @@ typedef struct vertice {
 typedef struct grafo { 
     int vertices; // numero de vertice total do grafo
     int arestas; // numero de arestas totais do grafo
+    float **M;
     VERTICE *adj; // Arranjo de vertices da estrutura
 }GRAFO;
 
@@ -74,10 +75,14 @@ int temCiclo(GRAFO *grafo, int ini, int *visitado, int cont);
 
 bool conjZ(bool *z, int V);
 
-void algPrim(GRAFO *grafo);
+void algPrim(GRAFO *G);
 
 void printArvore(int *ant, float *chave, int V);
 
 int minValor(float chave[], bool z[], int V);
 
 void verificaCiclo(GRAFO *grafo);
+
+float **alocaMatriz(int v);
+
+void GRAPHInsert(GRAFO *G, int u, int v, float custo);
