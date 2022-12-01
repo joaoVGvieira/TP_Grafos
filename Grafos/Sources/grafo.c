@@ -459,33 +459,7 @@ void preparaBuscaProfundidade(GRAFO *grafo, int ini){
 	}
 }
 
-int preparasetemCiclo(GRAFO *grafo, int ini){
 
-	int cont =0;
-    int* visitadoo = (int*)calloc(grafo->vertices , sizeof(int));
-	return temCiclo(grafo,ini, visitadoo,cont);	
-
-}
-
-
-int temCiclo(GRAFO *grafo, int ini, int *visitado, int cont){
-    visitado[ini] = cont;
-
-    ADJACENCIA* prox = (*grafo).adj[ini].cabeca;
-    while(prox != NULL){ 
-
-        if(visitado[prox->vertice] == 0){ 
-            prox->visited = 1;
-            temCiclo(grafo,prox->vertice,visitado,cont+1);
-        }
-		else if (visitado[prox->vertice] == 0)
-		{
-			return TRUE;
-		}
-        prox = prox-> prox;
-    }
-	return FALSE;
-}
 
 float procuraMenorDistancia(GRAFO *grafo, int vertice, int verticeDestino){
     float float_max = FLT_MAX;
@@ -731,26 +705,56 @@ void algPrim(GRAFO *grafo){
 }
 
 
+void buscaCiclo(GRAFO *grafo, int ini, int *visitado, int cont){
+    int i;
+    visitado[ini] = cont; //Prenchendo os vertices visitados com o numero referente a ordem em que foram visitados
+	// ini vertice origem
+	// prox->vertice vertice destino
+    ADJACENCIA* prox = (*grafo).adj[ini].cabeca;
+
+    while(prox != NULL){ //Percorrendo as arestas do vertice ''ini''
+
+        if(visitado[prox->vertice] == 0){ // se nao visitado
+            prox->visited = 1;
+			preencheVisitado(grafo,  ini, prox->vertice);
+            buscaCiclo(grafo,prox->vertice,visitado,cont+1);
+
+        }
+        prox = prox-> prox;
+    }
+}
+
 void verificaCiclo(GRAFO *grafo){
 	int ini = 0;
+	bool temciclo = false;
     int* visitadoo = (int*)calloc(grafo->vertices , sizeof(int));
     int i, cont = 1;
 
-    buscaProfundidade(grafo,ini, visitadoo,cont);
-	printf("\n");
-
+    buscaCiclo(grafo,ini, visitadoo,cont);
 	//Verifica quais arestas nao foram visitadas
     for(int j = 0; j < grafo->vertices; j++){
             ADJACENCIA* prox = (*grafo).adj[j].cabeca;
             while(prox != NULL){
                 if(prox->visited == 0){
-                    printf("O grafo possui ciclo!\n", j, prox->vertice);
-					return;
-
+                    printf("\nO grafo possui ciclo!\n");
+					temciclo= true;
+					j= grafo->vertices;
+					break;
                 }
 				prox = prox->prox;
             }
 
 	}
-	printf("O grafo nao possui ciclo!\n");
+	if (temciclo!=true)
+	{
+		printf("\nO grafo nao possui ciclo!\n");
+	}
+	for(int j = 0; j < grafo->vertices; j++){
+            ADJACENCIA* prox = (*grafo).adj[j].cabeca;
+            while(prox != NULL){
+				prox->visited = 0;
+				prox = prox->prox;
+            }
+
+	}
 }

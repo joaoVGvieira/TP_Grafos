@@ -18,7 +18,7 @@ void menu_principal(){
     printf("14. Retornar a centralidade de um vertice\n");
     printf("15. Imprime o grafo\n");
     printf("16. Ver se grafo tem Ciclo\n");
-
+    printf("17. Arvore geradora minima\n");
     printf("== Digite sua opcao : ");
 }
 
