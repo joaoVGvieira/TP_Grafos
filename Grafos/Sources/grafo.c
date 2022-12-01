@@ -13,12 +13,13 @@ GRAFO *criaGrafo (int v) {
 	
 	GRAFO *g = (GRAFO *)malloc(sizeof(GRAFO)); //aloca espaço para estrtura grafo
 	g->vertices = v; //atualizo o numero de vertice
-	g->arestas = 0;  //atualizo o numero de vertice
-	g->adj = (VERTICE *)malloc(v*sizeof(VERTICE)); //ler abaixo
+	g->arestas = 0;  //atualizo o numero de arestas
+	g->adj = (VERTICE *)calloc(v, sizeof(VERTICE)); //ler abaixo
 	//Dentro da estrturua tem se o arranjo para o ponteiro de vertice, nao o arranjo em si 	
 	// entao aloco o arranjo com (v) o numero de vertice desejado
 	for (i=0; i<v; i++){ 
 		g->adj[i].cabeca=NULL; //coloco NULL em todas arestas
+		g->adj[i].grau = 0;
 	}
 	return(g);
 }
@@ -65,7 +66,7 @@ void criaAresta(GRAFO *grafo, int verticeInicial, int verticeFinal, float p){
 
 	} 
 
-
+	grafo->adj[verticeInicial].grau +=1;
 
 	novo = criaListaadj(verticeInicial,p);
 	
@@ -88,12 +89,14 @@ void criaAresta(GRAFO *grafo, int verticeInicial, int verticeFinal, float p){
 
 	}
 
+	grafo->adj[verticeFinal].grau +=1;
 	grafo->arestas++;
 
 	return;
 }
 
 void imprime(GRAFO *grafo){
+
     printf("\n==== Info do Grafo ===\n");
 	printf("Vertices: %d. Arestas: %d. \n",grafo->vertices,grafo->arestas); //imprime numero de vertices e arestas
 	int i;
@@ -115,6 +118,14 @@ int ordem_grafo(GRAFO *grafo){
 
 int tamanho_grafo(GRAFO *grafo){
 	return grafo->arestas;
+}
+
+void grauVerices(GRAFO *grafo){
+
+	for(int i = 0; i < grafo->vertices; i ++){
+		printf("Grau do vertice %d = %d \n", i, grafo->adj[i].grau);
+	}
+	
 }
 
 void vizinho_vertice(GRAFO *grafo, int num){

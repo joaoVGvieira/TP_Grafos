@@ -12,6 +12,7 @@ typedef struct adjacencia {
 
 typedef struct vertice {
     ADJACENCIA *cabeca; //possui apenas a cabeca da lista de adjacencia
+    int grau;
 }VERTICE;
 
 typedef struct grafo { 
@@ -28,6 +29,8 @@ ADJACENCIA *criaListaadj(int v, float peso);
 void criaAresta(GRAFO *gr, int vi, int vf, float p);
 
 void imprime(GRAFO *gr);
+
+void grauVerices(GRAFO *grafo);
 
 int ordem_grafo(GRAFO *grafo);
 
