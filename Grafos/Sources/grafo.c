@@ -411,7 +411,6 @@ void preencheVisitado(GRAFO *grafo, int verticeOrigem, int verticeDestino){
 		if(prox->vertice == verticeOrigem){
 			prox->visited = 1;
 		}
-
 		prox = prox-> prox;
 	}
 }
@@ -732,3 +731,26 @@ void algPrim(GRAFO *grafo){
 }
 
 
+void verificaCiclo(GRAFO *grafo){
+	int ini = 0;
+    int* visitadoo = (int*)calloc(grafo->vertices , sizeof(int));
+    int i, cont = 1;
+
+    buscaProfundidade(grafo,ini, visitadoo,cont);
+	printf("\n");
+
+	//Verifica quais arestas nao foram visitadas
+    for(int j = 0; j < grafo->vertices; j++){
+            ADJACENCIA* prox = (*grafo).adj[j].cabeca;
+            while(prox != NULL){
+                if(prox->visited == 0){
+                    printf("O grafo possui ciclo!\n", j, prox->vertice);
+					return;
+
+                }
+				prox = prox->prox;
+            }
+
+	}
+	printf("O grafo nao possui ciclo!\n");
+}

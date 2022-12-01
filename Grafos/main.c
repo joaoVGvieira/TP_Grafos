@@ -300,12 +300,7 @@ int main(){
            printf("\n\nVolte Sempre!!!!\n\n");
         break;
         case 16:
-            if(preparasetemCiclo(grafo,0)){
-                printf("Tem ciclo\n");
-            }else
-            {
-              printf(" N Tem ciclo!!!\n");
-            }
+            verificaCiclo(grafo);
           break;
       default:
         algPrim(grafo);

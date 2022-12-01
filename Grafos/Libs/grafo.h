@@ -76,3 +76,5 @@ void algPrim(GRAFO *grafo);
 void printArvore(int *ant, float *chave, int V);
 
 int minValor(float chave[], bool z[], int V);
+
+void verificaCiclo(GRAFO *grafo);
