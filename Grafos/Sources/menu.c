@@ -20,6 +20,7 @@ void menu_principal(){
     printf("16. Ver se grafo tem Ciclo\n");
     printf("17. Arvore geradora minima\n");
     printf("18. Cobertura de vertices\n");
+    printf("19. Emparelhamento maximo\n");
     printf("== Digite sua opcao : ");
 }
 

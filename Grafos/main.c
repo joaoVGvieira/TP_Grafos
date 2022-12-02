@@ -318,6 +318,9 @@ int main(){
                 coberturaVertice(grafo);
               }
           break;
+          case 19:
+              EmparelhamentoMax(grafo);
+              break;
       default:
         printf("\n\nOPCAO INVALIDA!!!\n\n");
         break;

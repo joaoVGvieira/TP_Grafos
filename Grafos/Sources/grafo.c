@@ -858,3 +858,83 @@ void BubbleSort(GRAFO* grafo, int* graus, int* vertices){
 		}
 	}
 }
+
+void EmparelhamentoMax(GRAFO *grafo){
+
+	ZeraVisited(grafo);
+
+	printf("\nArestas que fazem parte do Emparelhamento maximo\n");
+	int verticeAtual = grafo->adj[0].grau, verticesCobertos = 0, menorVerticeAdjacente = -1;
+
+	int* graus = (int*)malloc(grafo->vertices * sizeof(int));
+
+	for(int i = 0; i < grafo->vertices; i++){
+		graus[i] = grafo->adj[i].grau;
+		
+
+	}
+
+	while(verticesCobertos < grafo->vertices){
+		
+		for(int i = 0; i < grafo->vertices; i++) if(verticeAtual == -1 && graus[i] != -1) verticeAtual = i;
+		
+		for(int i = 0; i < grafo->vertices; i++){ //Pega vertice com menor grau
+			if(graus[i] < graus[verticeAtual]) verticeAtual = i;
+		}
+
+		diminuiGrau(grafo, verticeAtual, graus);
+
+		ADJACENCIA* prox = (*grafo).adj[verticeAtual].cabeca;
+			while(prox != NULL){
+
+				if(menorVerticeAdjacente == -1 || graus[prox->vertice] < graus[menorVerticeAdjacente]) menorVerticeAdjacente = prox->vertice;
+
+				prox = prox->prox;
+			}
+		
+		diminuiGrau(grafo, menorVerticeAdjacente, graus);
+
+		printf("Aresta (%d,%d)\n", verticeAtual, menorVerticeAdjacente);
+		graus[verticeAtual] = grafo->vertices*10;
+		graus[menorVerticeAdjacente] = grafo->vertices*10;
+		menorVerticeAdjacente = -1;
+		verticesCobertos +=2 ;
+		verticeAtual = -1;
+
+		// for(int i = 0; i < grafo->vertices; i++){
+		// 	printf("%-3d ", graus[i]);
+		// }
+		printf("\n");
+	}
+
+	
+	
+}	
+
+void ZeraVisited(GRAFO *grafo){
+
+	for(int j = 0; j < grafo->vertices; j++){
+		ADJACENCIA* prox = (*grafo).adj[j].cabeca;
+		while(prox != NULL){
+
+			prox->visited = 0;
+			prox = prox->prox;
+		}
+				
+	}
+}
+	
+void diminuiGrau(GRAFO *grafo, int verticeOrigem, int *graus){
+
+	ADJACENCIA* prox = (*grafo).adj[verticeOrigem].cabeca;
+	while(prox != NULL){
+
+		graus[prox->vertice] = graus[prox->vertice] - 1;
+
+		prox = prox->prox;
+	}
+
+}
+
+
+

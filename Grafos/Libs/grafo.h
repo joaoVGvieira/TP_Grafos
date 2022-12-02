@@ -90,3 +90,9 @@ void GRAPHInsert(GRAFO *G, int u, int v, float custo);
 void coberturaVertice(GRAFO *grafo);
 
 void BubbleSort(GRAFO* grafo, int* graus, int* vertices);
+
+void ZeraVisited(GRAFO *grafo);
+
+void diminuiGrau(GRAFO *grafo, int verticeOrigem, int *graus);
+
+void EmparelhamentoMax(GRAFO *grafo);
